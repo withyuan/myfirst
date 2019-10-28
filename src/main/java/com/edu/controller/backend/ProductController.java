@@ -51,7 +51,7 @@ public class ProductController {
             return ServerResponse.createServerResponseByError(ResponseCode.NO_LOGIN, "未登录");
         }
 
-        
+
         int role= user.getRole();
         if(role== RoleEnum.ROLE_User.getRole()){
             return ServerResponse.createServerResponseByError(ResponseCode.ERROR, "权限不足");
