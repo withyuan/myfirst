@@ -3,15 +3,33 @@ package com.edu.service.impl;
 import com.edu.common.ResponseCode;
 import com.edu.common.ServerResponse;
 import com.edu.dao.ProductMapper;
+import com.edu.pojo.Category;
 import com.edu.pojo.Product;
+import com.edu.service.ICategoryService;
 import com.edu.service.IProductService;
+import com.edu.untils.DateUtils;
+import com.edu.vo.ProductDetailVO;
+import com.edu.vo.ProductListVO;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+
+import java.util.List;
 
 @Service
 public class ProductImpl implements IProductService {
+
+
+    @Value("${business.imageHost}")
+    private String imageHost;
     @Autowired
     ProductMapper productMapper;
+    @Autowired
+    ICategoryService categoryService;
     @Override
     public ServerResponse addOrUpdate(Product product) {
         if(product==null){
@@ -77,5 +95,79 @@ public class ProductImpl implements IProductService {
 
 
 
+    }
+
+    @Override
+    public ServerResponse search(String productName, Integer productId, Integer pageNum, Integer pageSize) {
+        if(productName!=null&&!productName.equals("")) {
+            productName = "%" + productName + "%";
+        }
+        //执行之前
+        PageHelper.startPage(pageNum,pageSize);
+
+        List<Product> products = productMapper.findProductsByNameAndId(productId, productName);
+        List<ProductListVO> productListVOS= Lists.newArrayList();
+        // List<Product>---> List<ProductListVO>
+        if(products!=null&&products.size()>0){
+            for (Product product:products
+                 ) {
+                ProductListVO productListVO = assembleProductListVO(product);
+                productListVOS.add(productListVO);
+            }
+        }
+        PageInfo pageInfo = new PageInfo(productListVOS);
+
+
+        return ServerResponse.createServerResponseBySuccess(pageInfo);
+    }
+
+    @Override
+    public ServerResponse detail(Integer productId) {
+        if(productId==null){
+            return ServerResponse.createServerResponseByError(ResponseCode.ERROR, "参数不能为空");
+        }
+        Product product = productMapper.selectByPrimaryKey(productId);
+        if(product==null){
+            return  ServerResponse.createServerResponseBySuccess();
+        }
+        //product-->productDetailVo
+        ProductDetailVO productDetailVO = assembleProductDetailVO(product);
+
+        return ServerResponse.createServerResponseBySuccess(productDetailVO);
+    }
+
+    private ProductListVO assembleProductListVO(Product product){
+        ProductListVO productListVO=new ProductListVO();
+        productListVO.setId(product.getId());
+        productListVO.setCategoryId(product.getCategoryId());
+        productListVO.setMainImage(product.getMainImage());
+        productListVO.setName(product.getName());
+        productListVO.setPrice(product.getPrice());
+        productListVO.setStatus(product.getStatus());
+        productListVO.setSubtitle(product.getSubtitle());
+        return  productListVO;
+    }
+    private ProductDetailVO assembleProductDetailVO(Product product){
+
+        ProductDetailVO productDetailVO=new ProductDetailVO();
+        productDetailVO.setCategoryId(product.getCategoryId());
+        productDetailVO.setCreateTime(DateUtils.dateToStr(product.getCreateTime()));
+        productDetailVO.setDetail(product.getDetail());
+        productDetailVO.setImageHost(imageHost);
+        productDetailVO.setName(product.getName());
+        productDetailVO.setMainImage(product.getMainImage());
+        productDetailVO.setId(product.getId());
+        productDetailVO.setPrice(product.getPrice());
+        productDetailVO.setStatus(product.getStatus());
+        productDetailVO.setStock(product.getStock());
+        productDetailVO.setSubImages(product.getSubImages());
+        productDetailVO.setSubtitle(product.getSubtitle());
+        productDetailVO.setUpdateTime(DateUtils.dateToStr(product.getUpdateTime()));
+//        Category category= categoryMapper.selectByPrimaryKey(product.getCategoryId());
+        ServerResponse<Category> serverResponse = categoryService.selectCategoryById(product.getCategoryId());
+        Category category = serverResponse.getData();
+       productDetailVO.setParentCategoryId(category.getParentId());
+
+        return productDetailVO;
     }
 }

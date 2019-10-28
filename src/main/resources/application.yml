@@ -1,6 +1,8 @@
 spring:
   profiles:
     active: prod
+business:
+  imageHost: http://localhost/
 
 logging:
   config: classpath:logback-spring.xml

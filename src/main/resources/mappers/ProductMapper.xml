@@ -118,4 +118,25 @@
   <update id="updateStatusById" parameterType="map">
     update neuedu_product set status=#{status} where id=#{id}
   </update>
+
+<!--  findProductsByNameAndId-->
+  <select id="findProductsByNameAndId" resultMap="BaseResultMap" parameterType="map">
+    select * from neuedu_product
+    <where>
+      <if test="productId!=null">
+          and  id=#{productId}
+      </if>
+      <if test="productName!=null">
+          and  name like #{productName}
+      </if>
+
+
+
+    </where>
+
+
+
+
+
+  </select>
 </mapper>

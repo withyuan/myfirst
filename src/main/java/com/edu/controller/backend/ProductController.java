@@ -7,8 +7,12 @@ import com.edu.pojo.Product;
 import com.edu.pojo.User;
 import com.edu.service.IProductService;
 import com.edu.untils.Const;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.HttpRequestHandler;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
@@ -50,8 +54,6 @@ public class ProductController {
         if(user==null){
             return ServerResponse.createServerResponseByError(ResponseCode.NO_LOGIN, "未登录");
         }
-
-
         int role= user.getRole();
         if(role== RoleEnum.ROLE_User.getRole()){
             return ServerResponse.createServerResponseByError(ResponseCode.ERROR, "权限不足");
@@ -61,12 +63,52 @@ public class ProductController {
 
 
     }
+
     /**
      * 搜索接口/manage/product/search.do
+     * @param productName 商品名字
+     * @param productId 商品ID
+     * @param pageNum   默认1 第几页
+     * @param pageSize 默认10 一页几个
+     * @return
      */
     @RequestMapping(value = "search.do")
-    public  ServerResponse  search(){
-        return null;
+    public  ServerResponse  search(@RequestParam(name = "productName",required = false)String productName,
+                                   @RequestParam(name="productId",required =false )Integer productId,
+                                   @RequestParam(name="pageNum",required = false ,defaultValue = "1")Integer pageNum,
+                                   @RequestParam(name="pageSize",required = false ,defaultValue = "10")Integer pageSize,
+                                   HttpSession session) {
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if(user==null){
+            return ServerResponse.createServerResponseByError(ResponseCode.NO_LOGIN, "未登录");
+        }
+        int role= user.getRole();
+        if(role== RoleEnum.ROLE_User.getRole()){
+            return ServerResponse.createServerResponseByError(ResponseCode.ERROR, "权限不足");
+        }
+
+        return   productService.search(productName, productId, pageNum, pageSize);
+
+    }
+
+    /**
+     * 查看商品详情
+     *  /manage/product/detail.do
+     */
+    @RequestMapping(value = "/{productId}")
+    public ServerResponse detail(@PathVariable("productId") Integer productId, HttpSession session){
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if(user==null){
+            return ServerResponse.createServerResponseByError(ResponseCode.NO_LOGIN, "未登录");
+        }
+        int role= user.getRole();
+        if(role== RoleEnum.ROLE_User.getRole()){
+            return ServerResponse.createServerResponseByError(ResponseCode.ERROR, "权限不足");
+        }
+        return  productService.detail(productId);
+
+
+
     }
 
 

@@ -49,4 +49,10 @@ public interface ProductMapper {
      * 根据ID修改status
      */
     int updateStatusById(@Param("id") Integer id,@Param("status") Integer status);
+    /**
+     * 查询
+     */
+    List<Product> findProductsByNameAndId(@Param("productId")Integer productId,
+                                          @Param("productName")String productName
+                                          );
 }
