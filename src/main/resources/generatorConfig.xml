@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!--加载驱动包位置-->
+    <classPathEntry location="D:\\maven\\.m2\\repository\\mysql\\mysql-connector-java\\5.1.48\\mysql-connector-java-5.1.48.jar"/>
+    <context id="context" targetRuntime="MyBatis3Simple">
+        <!-- 序列化数据表对应的实体类 -->
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+        <!-- 为生成的Java模型创建toString方法 -->
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+        <!-- 为生成的Java模型创建equals和hashcode方法 -->
+        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"/>
+
+        <!-- 是否包含注释 true 不包含 -->
+        <commentGenerator>
+            <property name="suppressAllComments" value="false"/>
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+
+        <!-- JDBC 连接 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3308/shopping"
+                        userId="root" password="root"/>
+
+        <!-- 数据类型转换器 -->
+        <javaTypeResolver type="org.mybatis.generator.internal.types.JavaTypeResolverDefaultImpl">
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- 实体类 -->
+        <javaModelGenerator targetPackage="com.edu.pojo"
+                            targetProject="src/main/java">
+            <property name="enableSubPackages" value="false"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!-- SQL映射 -->
+        <sqlMapGenerator targetPackage="mappers" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+        <!-- 接口映射 -->
+        <javaClientGenerator targetPackage="com.edu.dao"
+                             targetProject="src/main/java"
+                             type="XMLMAPPER">
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+
+        <!-- 数据表 -->
+        <table tableName="neuedu_cart" domainObjectName="Cart" enableCountByExample="false"
+        enableSelectByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"/>
+        <table tableName="neuedu_category" domainObjectName="Category" enableCountByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"/>
+        <table tableName="neuedu_order" domainObjectName="Order" enableCountByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"/>
+        <table tableName="neuedu_order_item" domainObjectName="OrderItem" enableCountByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"/>
+        <table tableName="neuedu_payinfo" domainObjectName="PayInfo" enableCountByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"/>
+        <table tableName="neuedu_product" domainObjectName="Product" enableCountByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"/>
+        <table tableName="neuedu_shipping" domainObjectName="Shipping" enableCountByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"/>
+        <table tableName="neuedu_user" domainObjectName="User" enableCountByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"/>
+    </context>
+</generatorConfiguration>
