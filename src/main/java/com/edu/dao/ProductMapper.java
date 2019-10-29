@@ -2,8 +2,10 @@ package com.edu.dao;
 
 import com.edu.pojo.Product;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
+import java.util.Set;
 
 public interface ProductMapper {
     /**
@@ -55,4 +57,12 @@ public interface ProductMapper {
     List<Product> findProductsByNameAndId(@Param("productId")Integer productId,
                                           @Param("productName")String productName
                                           );
+
+    /**
+     * 通过给定的类别ID集合来查询该类的产品
+     * @param integers 类别ID集合
+     * @param keyword      名字
+     * @return
+     */
+    List<Product> searchProduct(@Param("integerSet")Set<Integer> integers,@Param("keyword") String keyword);
 }

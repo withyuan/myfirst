@@ -1,6 +1,9 @@
 package com.edu.dao;
 
 import com.edu.pojo.Cart;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.PathVariable;
+
 import java.util.List;
 
 public interface CartMapper {
@@ -43,4 +46,18 @@ public interface CartMapper {
      * @mbg.generated
      */
     int updateByPrimaryKey(Cart record);
+    /**
+     * 根据用户ID和商品ID查询购物车信息
+     */
+    Cart findCartByUserIdAndProductId(@Param("userid") Integer userId,@Param("productid") Integer productId);
+
+    /**
+     * 根据用户ID查询购物车信息
+     */
+   List<Cart> findCartByUserId(@Param("userid")Integer userId);
+    /**
+     * 统计用户购物车中未选中的商品数量
+     */
+    Integer isAllCheck(@Param("userid")Integer userId);
+
 }

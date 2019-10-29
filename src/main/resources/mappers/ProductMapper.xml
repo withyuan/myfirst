@@ -134,9 +134,21 @@
 
     </where>
 
-
-
-
-
+  </select>
+<!--  searchProduct-->
+  <select id="searchProduct" resultMap="BaseResultMap" parameterType="map">
+    select * from neuedu_product
+    <where>
+      <if test="integerSet!=null and integerSet.size>0">
+        and  category_id in
+        <foreach collection="integerSet" item="categoryId" open="(" close=")" separator=",">
+          <!--遍历类别ID的结合以（.....）中间以逗号分隔-->
+          #{categoryId}
+        </foreach>
+      </if>
+      <if test="keyword!=null">
+        and  name like #{keyword}
+      </if>
+    </where>
   </select>
 </mapper>

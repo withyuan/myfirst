@@ -7,9 +7,7 @@ import com.edu.pojo.Product;
 import com.edu.pojo.User;
 import com.edu.service.IProductService;
 import com.edu.untils.Const;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -108,9 +106,6 @@ public class ProductController {
         return  productService.detail(productId);
 
 
-        /**
-         * 测试修改
-         */
 
     }
 

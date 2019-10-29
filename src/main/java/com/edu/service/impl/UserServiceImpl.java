@@ -49,7 +49,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public ServerResponse login(String username, String password,int type) {
+    public ServerResponse login(String username, String password, int type) {
         //1.参数的校验
         if (username == null || username.equals("")) {
             return ServerResponse.createServerResponseByError(ResponseCode.ERROR, "用户名不能为空");
@@ -69,9 +69,9 @@ public class UserServiceImpl implements IUserService {
         if (user == null) {
             return ServerResponse.createServerResponseByError(ResponseCode.EMPTY_CART, "密码错误");
         }
-        if(type==0){//管理员
-            if(user.getRole()==RoleEnum.ROLE_User.getRole()){//没有权限
-                return ServerResponse.createServerResponseBySuccess(ResponseCode.ERROR,"登录权限不足");
+        if (type == 0) {//管理员
+            if (user.getRole() == RoleEnum.ROLE_User.getRole()) {//没有权限
+                return ServerResponse.createServerResponseBySuccess(ResponseCode.ERROR, "登录权限不足");
 
 
             }
@@ -175,26 +175,26 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public ServerResponse  reset_password(String passwordOld,String passwordNew,String username) {
+    public ServerResponse reset_password(String passwordOld, String passwordNew, String username) {
         //1.参数非空判断
-        if (passwordNew == null||passwordNew.equals("")) {
+        if (passwordNew == null || passwordNew.equals("")) {
             return ServerResponse.createServerResponseByError(ResponseCode.ERROR, "参数不能为空");
         }
-        if (passwordOld == null||passwordOld.equals("")) {
+        if (passwordOld == null || passwordOld.equals("")) {
             return ServerResponse.createServerResponseByError(ResponseCode.ERROR, "参数不能为空");
         }
         //2.密码加密处理
-        passwordOld=MD5Utils.getMD5Code(passwordOld);
-        passwordNew=MD5Utils.getMD5Code(passwordNew);
+        passwordOld = MD5Utils.getMD5Code(passwordOld);
+        passwordNew = MD5Utils.getMD5Code(passwordNew);
         //3.根据用户名密码去查询是否是正确的用户名和密码
         User user = userMapper.findUserAndPwd(username, passwordOld);
-        if(user==null){
-            return ServerResponse.createServerResponseByError(ResponseCode.ERROR,"旧密码输入错误");
+        if (user == null) {
+            return ServerResponse.createServerResponseByError(ResponseCode.ERROR, "旧密码输入错误");
         }
         Integer id = user.getId();
         //3.去修改
         int result = userMapper.updateLoginPassword(id, passwordNew);
-        if(result<=0){
+        if (result <= 0) {
             return ServerResponse.createServerResponseByError(ResponseCode.DEFEACTED_PASSWORDNEW, "修改密码操作失败");
         }
 
