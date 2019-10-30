@@ -33,3 +33,7 @@ pagehelper:
   reasonable: true
   support-methods-arguments: true
   params: countSql
+  #配置SQL语句打印
+logging:
+  level:
+    com.edu.dao: debug

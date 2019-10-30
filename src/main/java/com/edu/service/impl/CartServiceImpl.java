@@ -11,7 +11,6 @@ import com.edu.service.IProductService;
 import com.edu.untils.BigDecimalUtils;
 import com.edu.vo.CartProductVO;
 import com.edu.vo.CartVO;
-import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -75,6 +74,68 @@ public class CartServiceImpl implements ICartService {
         return ServerResponse.createServerResponseBySuccess(cartVO);
     }
 
+    @Override
+    public ServerResponse list(Integer userId) {
+        //查看该用户购物车根据用户号
+        CartVO cartVO = getCartVO(userId);
+
+        return ServerResponse.createServerResponseBySuccess(cartVO);
+    }
+
+    @Override
+    public ServerResponse update(Integer userId, Integer productId, Integer count) {
+        //step1:参数判定
+        if (productId == null || count == null) {
+            return ServerResponse.createServerResponseByError(ResponseCode.ERROR, "参数不能为空");
+        }
+        //查询购物车中的商品
+        Cart cart = cartMapper.findCartByUserIdAndProductId(userId, productId);
+        if (cart != null) {
+            //更新数量
+            cart.setQuantity(count);
+            cartMapper.updateByPrimaryKey(cart);
+        }
+
+        return ServerResponse.createServerResponseBySuccess(getCartVO(userId));
+    }
+
+    @Override
+    public ServerResponse deleteProduct(String productIds, Integer userId) {
+        //step1:参数非空校验
+        if (productIds == null || productIds.equals("")) {
+            return ServerResponse.createServerResponseByError(ResponseCode.ERROR, "参数不能为空");
+        }
+        //productIds-->List<Integer>
+        List<Integer> productList = Lists.newArrayList();
+        String[] productIdArr = productIds.split(",");
+        if (productIdArr != null && productIdArr.length > 0) {
+            for (String p : productIdArr
+            ) {
+                //将字符串转成INT
+                Integer productId = Integer.parseInt(p);
+                productList.add(productId);
+            }
+        }
+        //调用DAO
+        cartMapper.deleteByUserIdAndProductIds(userId, productList);
+
+        return ServerResponse.createServerResponseBySuccess(getCartVO(userId));
+    }
+
+    @Override
+    public ServerResponse getCartProductCount(Integer userId) {
+
+        Integer result = cartMapper.getCartProductCount(userId);
+
+        return ServerResponse.createServerResponseBySuccess(result);
+    }
+
+    @Override
+    public ServerResponse select(Integer userId, Integer productId, Integer check) {
+        cartMapper.selectOrUnselectProduct(userId, productId, check);
+        return ServerResponse.createServerResponseBySuccess(getCartVO(userId));
+    }
+
     private CartVO getCartVO(Integer userId) {
 
         CartVO cartVO = new CartVO();
@@ -84,9 +145,9 @@ public class CartServiceImpl implements ICartService {
             return cartVO;
         }
         //定义购物车商品总价格
-        BigDecimal cartTotalPrice=new BigDecimal(0);
+        BigDecimal cartTotalPrice = new BigDecimal(0);
         //List<Cart>---List<CartProductVO>
-        List<CartProductVO> cartProductVOS= Lists.newArrayList();
+        List<CartProductVO> cartProductVOS = Lists.newArrayList();
         int limit_quantity = 0;//加入购物车的数量
         //库存描述信息
         String limitQuantity = null;
@@ -122,9 +183,9 @@ public class CartServiceImpl implements ICartService {
                                 cart.getQuantity() * 1.0));
                 cartProductVO.setProductStock(product.getStock());
                 cartProductVO.setProductChecked(cart.getChecked());
-                if(cart.getChecked()==CheckEnum.CART_PRODUCT_CHECK.getCheck()){
-              //商品被选中 总价格+上商品*商品数量
-                cartTotalPrice=BigDecimalUtils.add(cartTotalPrice.doubleValue(),cartProductVO.getProductTotalPrice().doubleValue());
+                if (cart.getChecked() == CheckEnum.CART_PRODUCT_CHECK.getCheck()) {
+                    //商品被选中 总价格+上商品*商品数量
+                    cartTotalPrice = BigDecimalUtils.add(cartTotalPrice.doubleValue(), cartProductVO.getProductTotalPrice().doubleValue());
                 }
 
 
@@ -137,10 +198,10 @@ public class CartServiceImpl implements ICartService {
 
         //判断是否全选
         Integer isAllCheck = cartMapper.isAllCheck(userId);
-        if(isAllCheck==0){
+        if (isAllCheck == 0) {
             //没查到说明全选中了
             cartVO.setIsallchecked(true);
-        }else {
+        } else {
             cartVO.setIsallchecked(false);
         }
         return cartVO;
