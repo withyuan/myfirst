@@ -82,4 +82,22 @@
     payment_time, send_time, end_time, close_time, create_time, update_time
     from neuedu_order
   </select>
+  <select id="findOrderByOrderNo" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, user_id, order_no, shipping_id, payment, payment_type, postage, status,
+    payment_time, send_time, end_time, close_time, create_time, update_time
+    from neuedu_order
+    where  order_no=#{orderNo}
+  </select>
+<!--  updateByOrderNo-->
+  <update id="updateByOrderNo" parameterType="com.edu.pojo.Order">
+
+    update neuedu_order
+    set
+    status = #{order.status,jdbcType=INTEGER},
+    payment_time = #{order.paymentTime,jdbcType=TIMESTAMP},
+    update_time = now()
+    where order_no = #{order.orderNo}
+  </update>
+
+
 </mapper>
