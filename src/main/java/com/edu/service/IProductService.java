@@ -2,6 +2,7 @@ package com.edu.service;
 
 import com.edu.common.ServerResponse;
 import com.edu.pojo.Product;
+import com.edu.vo.ProductDetailVO;
 
 /**
  * 商品服务接口
@@ -40,4 +41,12 @@ public interface IProductService {
      * 根据商品ID查询商品信息(库存)
      */
      ServerResponse<Product> findProductById(Integer productId);
+    /**
+     * 扣库存
+     */
+    ServerResponse reduceProductStock(Integer productId,Integer stock);
+    /**
+     * 查询product
+     */
+    ServerResponse<Product> selectProduct(Integer productId);
 }

@@ -248,6 +248,34 @@ public class ProductImpl implements IProductService {
         return ServerResponse.createServerResponseBySuccess(product);
     }
 
+    @Override
+    public ServerResponse reduceProductStock(Integer productId, Integer stock) {
+        if(productId==null){
+            return ServerResponse.createServerResponseByError(ResponseCode.ERROR, "商品Id必须传");
+        }
+        if(stock==null){
+            return ServerResponse.createServerResponseByError(ResponseCode.ERROR, "库存参数必须传");
+        }
+        int result = productMapper.reduceProductStock(productId, stock);
+        if(result<=0){
+            return ServerResponse.createServerResponseByError(ResponseCode.ERROR, "扣库存失败");
+        }
+        return ServerResponse.createServerResponseBySuccess();
+    }
+
+    @Override
+    public ServerResponse<Product> selectProduct(Integer productId) {
+        if (productId == null) {
+            return ServerResponse.createServerResponseByError(ResponseCode.ERROR, "参数不能为空");
+        }
+        Product product = productMapper.selectByPrimaryKey(productId);
+        if (product == null) {
+            return ServerResponse.createServerResponseBySuccess();
+        }
+        return ServerResponse.createServerResponseBySuccess(product);
+    }
+
+
     private ProductListVO assembleProductListVO(Product product) {
         ProductListVO productListVO = new ProductListVO();
         productListVO.setId(product.getId());

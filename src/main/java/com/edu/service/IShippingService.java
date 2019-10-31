@@ -12,7 +12,7 @@ public interface IShippingService {
     /**
      * 查看选中的地址
      */
-    ServerResponse select(Integer shippingId);
+    ServerResponse<Shipping> select(Integer shippingId);
 
 /**
  * 删除地址
@@ -27,5 +27,9 @@ public interface IShippingService {
      * /shipping/list.do
      */
     ServerResponse list(Integer pageNum,Integer pageSize,Integer userId);
+    /**
+     * 根据用户名号和地址号 查询地址是否存在
+     */
+    ServerResponse  isNotExistByUserIdAndShippingId(Integer userId,Integer shippingId);
 
 }

@@ -112,6 +112,25 @@
             </if>
         </where>
 
-
     </update>
+<!--    findCartsByUserIdAndChecked-->
+    <select id="findCartsByUserIdAndChecked" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, user_id, product_id, quantity, checked, create_time, update_time
+    from neuedu_cart where user_id=#{userId} and checked=1
+  </select>
+<!--    deleteBatch-->
+    <delete id="deleteBatch" parameterType="java.util.List">
+        delete from neuedu_cart
+        <where>
+              id in
+                <foreach collection="cartList" item="cart" open="(" close=")" separator=",">
+                    #{cart.id}
+                </foreach>
+        </where>
+
+    </delete>
+
+
+
+
 </mapper>

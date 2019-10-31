@@ -66,9 +66,7 @@ public interface CartMapper {
      * 通过用户名和产品号删除某个产品
      */
     Integer deleteByUserIdAndProductIds(@Param("userid") Integer userId, @Param("productIds") List<Integer> productIds);
-    /**
-     * 查询购物车里产品的数量
-     */
+
     /**
      * 得到购物车里产品的数量
      */
@@ -80,5 +78,14 @@ public interface CartMapper {
      */
 
     Integer selectOrUnselectProduct(Integer userId, Integer productId, Integer check);
+    /**
+     * 根据用户名查询已经选择的商品
+     */
+    List<Cart> findCartsByUserIdAndChecked(@Param("userId") Integer userId);
+
+    /**
+     * 清空购物车中已经选中的商品
+     */
+    int deleteBatch(@Param("cartList") List<Cart> cartList);
 
 }

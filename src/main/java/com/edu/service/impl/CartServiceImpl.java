@@ -13,6 +13,7 @@ import com.edu.vo.CartProductVO;
 import com.edu.vo.CartVO;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheAnnotationParser;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -136,8 +137,32 @@ public class CartServiceImpl implements ICartService {
         return ServerResponse.createServerResponseBySuccess(getCartVO(userId));
     }
 
-    private CartVO getCartVO(Integer userId) {
+    @Override
+    public ServerResponse<List<Cart>> findCartsByUserIdAndChecked(Integer userId) {
+        List<Cart> cartList = cartMapper.findCartsByUserIdAndChecked(userId);
 
+        return ServerResponse.createServerResponseBySuccess(cartList);
+    }
+
+    @Override
+    public ServerResponse deleteBatch(List<Cart> cartList) {
+        if(cartList==null||cartList.size()==0){
+            return  ServerResponse.createServerResponseByError(ResponseCode.ERROR, "要删出的购物车不能为空");
+
+        }
+     int result=  cartMapper.deleteBatch(cartList);
+        if(result!=cartList.size()){
+
+            return ServerResponse.createServerResponseByError(ResponseCode.ERROR, "购物车清空失败");
+        }
+        return ServerResponse.createServerResponseBySuccess();
+
+
+
+
+    }
+
+    private CartVO getCartVO(Integer userId) {
         CartVO cartVO = new CartVO();
         //根据userID查询购物信息-->List<Cart>
         List<Cart> cartList = cartMapper.findCartByUserId(userId);

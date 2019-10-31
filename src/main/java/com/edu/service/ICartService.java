@@ -1,6 +1,9 @@
 package com.edu.service;
 
 import com.edu.common.ServerResponse;
+import com.edu.pojo.Cart;
+
+import java.util.List;
 
 /**
  * 购物车
@@ -42,4 +45,13 @@ public interface ICartService {
      */
     ServerResponse select(Integer userId, Integer productId, Integer check);
 
+
+    /**
+     * 根据用户ID查看用户已经选择的商品
+     */
+    ServerResponse<List<Cart>> findCartsByUserIdAndChecked(Integer userID);
+    /**
+     * 批量删除购物车商品
+     */
+    ServerResponse deleteBatch(List<Cart> cartList);
 }

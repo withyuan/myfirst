@@ -125,5 +125,9 @@
     receiver_city, receiver_district, receiver_address, receiver_zip, create_time, update_time
     from neuedu_shipping where user_id=#{userId}
   </select>
-
+<!--  isNotExistByUserIdAndShippingId-->
+  <select id="isNotExistByUserIdAndShippingId"   parameterType="java.lang.Integer" resultType="int">
+    select  count(*)
+    from neuedu_shipping where user_id=#{userId} and id=#{shippingId}
+  </select>
   </mapper>

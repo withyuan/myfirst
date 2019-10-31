@@ -57,6 +57,10 @@ public interface ShippingMapper {
      * selectAllByUserId查询该用户的地址列表
      */
       List<Shipping> selectAllByUserId(Integer userId);
+    /**
+     *isNotExistByUserIdAndShippingId根据用户ID和地址ID判断该地址是否存在
+     */
+    int isNotExistByUserIdAndShippingId(Integer userId,Integer shippingId);
 
 
 }

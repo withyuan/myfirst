@@ -116,7 +116,7 @@
 
   <!--  根据ID修改状态-->
   <update id="updateStatusById" parameterType="map">
-    update neuedu_product set status=#{status} where id=#{id}
+    update neuedu_product set status=#{status} ,update_time=now() where id=#{id}
   </update>
 
 <!--  findProductsByNameAndId-->
@@ -151,4 +151,9 @@
       </if>
     </where>
   </select>
+<!--  reduceProductStock-->
+  <update id="reduceProductStock" parameterType="map">
+    update neuedu_product set stock=#{stock} ,update_time=now() where id=#{productId}
+  </update>
+
 </mapper>

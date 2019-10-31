@@ -41,12 +41,14 @@ public class ShippingServiceImpl implements IShippingService {
     }
 
     @Override
-    public ServerResponse select(Integer shippingId) {
+    public ServerResponse<Shipping> select(Integer shippingId) {
         if(shippingId==null){
             return ServerResponse.createServerResponseByError("参数错误");
         }
         Shipping shipping = shippingMapper.selectByPrimaryKey(shippingId);
-
+        if(shipping==null){
+            return ServerResponse.createServerResponseByError(ResponseCode.ERROR, "收货地址不存在");
+        }
         return ServerResponse.createServerResponseBySuccess(shipping);
     }
 
@@ -87,5 +89,20 @@ public class ShippingServiceImpl implements IShippingService {
         PageInfo pageInfo=new PageInfo(shippingList);
 
         return ServerResponse.createServerResponseBySuccess(pageInfo);
+    }
+
+    @Override
+    public ServerResponse isNotExistByUserIdAndShippingId(Integer userId, Integer shippingId) {
+
+        if(shippingId==null){
+            return ServerResponse.createServerResponseByError("参数错误");
+        }if(userId==null){
+            return ServerResponse.createServerResponseByError("参数错误");
+        }
+        int result = shippingMapper.isNotExistByUserIdAndShippingId(userId, shippingId);
+        if(result<=0){
+            return ServerResponse.createServerResponseByError(ResponseCode.ERROR, "不存在该地址");
+        }
+        return ServerResponse.createServerResponseBySuccess();
     }
 }
