@@ -8,7 +8,7 @@ import java.util.Date;
 
 //joda-time时间格式化
 public class DateUtils {
-    private  static final String FORMAT_DEFAULT="yyyy-MM-dd HH:mm:ss";
+    public   static final String FORMAT_DEFAULT="yyyy-MM-dd HH:mm:ss";
 
 
     /**

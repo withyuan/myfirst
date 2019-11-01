@@ -23,6 +23,7 @@ public interface IProductService {
                           Integer pageNum,
                           Integer pageSize);
 
+
     /**
      * 查看详情产品
      */

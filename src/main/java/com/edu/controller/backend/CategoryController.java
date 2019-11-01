@@ -28,15 +28,7 @@ public class CategoryController {
      * 添加类别manage/category/add_category.do
      */
     @RequestMapping("add_category.do")
-    public ServerResponse addCategory(Category category, HttpSession session){
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
-        if(user==null){
-            return ServerResponse.createServerResponseByError(ResponseCode.NO_LOGIN, "未登录");
-        }
-       int role= user.getRole();
-        if(role== RoleEnum.ROLE_User.getRole()){
-            return ServerResponse.createServerResponseByError(ResponseCode.ERROR, "权限不足");
-        }
+    public ServerResponse addCategory(Category category ){
         return categoryService.addCategory(category);
     }
     /**
@@ -46,16 +38,9 @@ public class CategoryController {
      * categoryUrl
      */
     @RequestMapping("set_category.do")
-    public ServerResponse updateCategory(Category category ,HttpSession session){
+    public ServerResponse updateCategory(Category category){
 
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
-        if(user==null){
-            return ServerResponse.createServerResponseByError(ResponseCode.NO_LOGIN, "未登录");
-        }
-        int role= user.getRole();
-        if(role== RoleEnum.ROLE_User.getRole()){
-            return ServerResponse.createServerResponseByError(ResponseCode.ERROR, "权限不足");
-        }
+
         return categoryService.updateCategory(category);
     }
     /**
@@ -63,15 +48,8 @@ public class CategoryController {
      * categoryId
      */
     @RequestMapping("{categoryId}")
-    public ServerResponse getCategoryById(@PathVariable("categoryId") Integer categoryId,HttpSession session){
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
-        if(user==null){
-            return ServerResponse.createServerResponseByError(ResponseCode.NO_LOGIN, "未登录");
-        }
-        int role= user.getRole();
-        if(role== RoleEnum.ROLE_User.getRole()){
-            return ServerResponse.createServerResponseByError(ResponseCode.ERROR, "权限不足");
-        }
+    public ServerResponse getCategoryById(@PathVariable("categoryId") Integer categoryId){
+
 
         return categoryService.getCategoryById(categoryId);
     }
@@ -80,15 +58,8 @@ public class CategoryController {
      * categoryId
      */
     @RequestMapping("deep/{categoryId}")
-    public ServerResponse deepCategory(@PathVariable("categoryId") Integer categoryId,HttpSession session){
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
-        if(user==null){
-            return ServerResponse.createServerResponseByError(ResponseCode.NO_LOGIN, "未登录");
-        }
-        int role= user.getRole();
-        if(role== RoleEnum.ROLE_User.getRole()){
-            return ServerResponse.createServerResponseByError(ResponseCode.ERROR, "权限不足");
-        }
+    public ServerResponse deepCategory(@PathVariable("categoryId") Integer categoryId){
+
         return categoryService.deepCategory(categoryId);
     }
 }

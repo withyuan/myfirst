@@ -46,8 +46,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import static javafx.scene.input.KeyCode.R;
-import static javafx.scene.input.KeyCode.S;
 
 /**
  * 订单实现类
@@ -423,7 +421,7 @@ public class OrderServiceImpl implements IOrderService {
                 .setUndiscountableAmount(undiscountableAmount).setSellerId(sellerId).setBody(body)
                 .setOperatorId(operatorId).setStoreId(storeId).setExtendParams(extendParams)
                 .setTimeoutExpress(timeoutExpress)
-                 .setNotifyUrl("http://yjzppj.natappfree.cc/order/callback.do")
+                 .setNotifyUrl("http://aq95if.natappfree.cc/order/callback.do")
                 //支付宝服务器主动通知商户服务器里指定的页面http路径,根据需要设置
                 .setGoodsDetailList(goodsDetailList);
 

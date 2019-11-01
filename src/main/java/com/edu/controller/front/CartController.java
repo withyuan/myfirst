@@ -34,9 +34,6 @@ public class CartController {
                                   HttpSession session
     ) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
-        if (user == null) {
-            return ServerResponse.createServerResponseByError(ResponseCode.NO_LOGIN, "未登录");
-        }
 
         return cartService.addProductToCart(user.getId(), productId, count);
     }
@@ -47,11 +44,7 @@ public class CartController {
      */
     @RequestMapping("/list.do")
     public ServerResponse list(HttpSession session) {
-
         User user = (User) session.getAttribute(Const.CURRENT_USER);
-        if (user == null) {
-            return ServerResponse.createServerResponseByError(ResponseCode.NO_LOGIN, "未登录");
-        }
         Integer userId = user.getId();
         return cartService.list(userId);
 
@@ -66,9 +59,6 @@ public class CartController {
     @RequestMapping("update/{productId}/{count}")
     public ServerResponse update(@PathVariable("productId") Integer productId, @PathVariable("count") Integer count, HttpSession session) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
-        if (user == null) {
-            return ServerResponse.createServerResponseByError(ResponseCode.NO_LOGIN, "未登录");
-        }
         Integer userId = user.getId();
         return cartService.update(userId, productId, count);
 
@@ -81,9 +71,6 @@ public class CartController {
     @RequestMapping("delete_product.do")
     public ServerResponse deleteProduct(String productIds, HttpSession session) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
-        if (user == null) {
-            return ServerResponse.createServerResponseByError(ResponseCode.NO_LOGIN, "未登录");
-        }
         Integer userId = user.getId();
         return cartService.deleteProduct(productIds, userId);
     }
@@ -94,9 +81,6 @@ public class CartController {
     @RequestMapping(value = "/select.do")
     public ServerResponse select(HttpSession session, Integer productId) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
-        if (user == null) {
-            return ServerResponse.createServerResponseByError(ResponseCode.NO_LOGIN, "未登录");
-        }
         return cartService.select(user.getId(), productId, CheckEnum.CART_PRODUCT_CHECK.getCheck());
     }
 
@@ -106,9 +90,7 @@ public class CartController {
     @RequestMapping(value = "/un_select.do")
     public ServerResponse un_select(HttpSession session, Integer productId) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
-        if (user == null) {
-            return ServerResponse.createServerResponseByError(ResponseCode.NO_LOGIN, "未登录");
-        }
+
         return cartService.select(user.getId(), productId, CheckEnum.CART_PRODUCT_UNCHECK.getCheck());
     }
 
@@ -118,9 +100,7 @@ public class CartController {
     @RequestMapping(value = "/select_all.do")
     public ServerResponse select_all(HttpSession session) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
-        if (user == null) {
-            return ServerResponse.createServerResponseByError(ResponseCode.NO_LOGIN, "未登录");
-        }
+
         return cartService.select(user.getId(), null, CheckEnum.CART_PRODUCT_CHECK.getCheck());
     }
 
@@ -130,9 +110,7 @@ public class CartController {
     @RequestMapping(value = "/un_select_all.do")
     public ServerResponse un_select_all(HttpSession session) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
-        if (user == null) {
-            return ServerResponse.createServerResponseByError(ResponseCode.NO_LOGIN, "未登录");
-        }
+
         return cartService.select(user.getId(), null, CheckEnum.CART_PRODUCT_UNCHECK.getCheck());
     }
 
@@ -143,9 +121,7 @@ public class CartController {
     @RequestMapping("get_cart_product_count.do")
     public ServerResponse getCartProductCount(HttpSession session) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
-        if (user == null) {
-            return ServerResponse.createServerResponseByError(ResponseCode.NO_LOGIN, "未登录");
-        }
+
         Integer userId = user.getId();
 
         return cartService.getCartProductCount(userId);

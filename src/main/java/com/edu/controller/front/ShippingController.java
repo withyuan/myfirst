@@ -27,9 +27,7 @@ public class ShippingController {
     @RequestMapping("add.do")
     public ServerResponse add(Shipping shipping, HttpSession session){
         User user = (User) session.getAttribute(Const.CURRENT_USER);
-        if (user == null) {
-            return ServerResponse.createServerResponseByError(ResponseCode.NO_LOGIN, "未登录");
-        }
+
         Integer userId = user.getId();
         shipping.setUserId(userId);
         return shippingService.add(shipping);
@@ -41,9 +39,7 @@ public class ShippingController {
     @RequestMapping("update.do")
     public ServerResponse update(Shipping shipping, HttpSession session){
         User user = (User) session.getAttribute(Const.CURRENT_USER);
-        if (user == null) {
-            return ServerResponse.createServerResponseByError(ResponseCode.NO_LOGIN, "未登录");
-        }
+
         Integer userId = user.getId();
         shipping.setUserId(userId);
         return shippingService.update(shipping);
@@ -54,11 +50,8 @@ public class ShippingController {
      * /shipping/select.do
      */
     @RequestMapping("select.do")
-    public  ServerResponse select(Integer shippingID ,HttpSession session){
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
-        if (user == null) {
-            return ServerResponse.createServerResponseByError(ResponseCode.NO_LOGIN, "未登录");
-        }
+    public  ServerResponse select(Integer shippingID ){
+
         return shippingService.select(shippingID);
     }
     /**
@@ -68,9 +61,7 @@ public class ShippingController {
     @RequestMapping("del.do")
     public ServerResponse delete(Integer shippingId,HttpSession session){
         User user = (User) session.getAttribute(Const.CURRENT_USER);
-        if (user == null) {
-            return ServerResponse.createServerResponseByError(ResponseCode.NO_LOGIN, "未登录");
-        }
+
         Integer userId = user.getId();
     return shippingService.delete(shippingId, userId);
 
@@ -85,9 +76,7 @@ public class ShippingController {
                                 HttpSession session){
 
         User user = (User) session.getAttribute(Const.CURRENT_USER);
-        if (user == null) {
-            return ServerResponse.createServerResponseByError(ResponseCode.NO_LOGIN, "未登录");
-        }
+
         Integer userId = user.getId();
         return shippingService.list(pageNum,pageSize,userId);
 
