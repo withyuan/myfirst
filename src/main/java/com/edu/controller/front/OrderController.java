@@ -10,8 +10,10 @@ import com.edu.service.IOrderService;
 import com.edu.untils.Const;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -56,6 +58,89 @@ public class OrderController {
         return orderService.pay(user.getId(),orderNo);
 
     }
+    /**
+     * 查询订单支付状态
+     * /order/query_order_pay_status.do
+     */
+    @RequestMapping("query_order_pay_status/{orderNo}")
+    public ServerResponse orderPay_status(@PathVariable("orderNo") Long orderNo,HttpSession session){
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createServerResponseByError(ResponseCode.NO_LOGIN, "未登录");
+        }
+
+        return orderService.orderPay_status(orderNo);
+    }
+    /**
+     * 获取订单的商品信息
+     * /order/get_order_cart_product.do
+     */
+    @RequestMapping("get_order_cart_product")
+    public ServerResponse get_order_cart_product(HttpSession session){
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createServerResponseByError(ResponseCode.NO_LOGIN, "未登录");
+        }
+        Integer userId = user.getId();
+        return  orderService.get_order_cart_product(userId);
+    }
+
+    /**
+     * 订单List
+     * /order/list.do
+     */
+    @RequestMapping("list.do")
+    public  ServerResponse list(  @RequestParam(required = false,defaultValue = "1")Integer pageNum,
+                                  @RequestParam(required = false,defaultValue = "10")Integer pageSize,
+                                  HttpSession session){
+
+
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createServerResponseByError(ResponseCode.NO_LOGIN, "未登录");
+        }
+
+
+            return  orderService.list(user.getId(), pageNum, pageSize);
+
+
+
+    }
+    /**
+     * 订单详情detail
+     * /order/detail.do
+     */
+    @RequestMapping("detail/{orderNo}")
+    public ServerResponse detail(@PathVariable("orderNo")Long orderNo,HttpSession session){
+
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createServerResponseByError(ResponseCode.NO_LOGIN, "未登录");
+        }
+
+        return orderService.detail(orderNo);
+
+    }
+
+
+    /**
+     * 取消订单
+     * /order/cancel.do
+     */
+    @RequestMapping("cancel/{orderNo}")
+    public  ServerResponse cancel(@PathVariable("orderNo")Long orderNo,HttpSession session){
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createServerResponseByError(ResponseCode.NO_LOGIN, "未登录");
+        }
+
+        Integer userId = user.getId();
+            return orderService.concel( userId, orderNo);
+    }
+
+
+
+
     /**
      *支付宝服务回调商家服务器接口
      */

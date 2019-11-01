@@ -53,4 +53,20 @@ public interface OrderMapper {
      * 按照订单号修改
      */
     int   updateByOrderNo(@Param("order")Order order);
+    /**
+     * 根据订单号和用户号查询订单
+     */
+    Order findOrderByUserIdAndOrderNo(@Param("userId")Integer userId,@Param("orderNo")Long orderNo);
+    /**
+     * 根据用户名查询
+     */
+   List<Order> findOrderByUserId(@Param("userId")Integer userId);
+
+    /**
+     * 发货
+     */
+   int updateOrderSend(Order order);
+
+
+
 }
