@@ -1,11 +1,10 @@
 package com.edu.interceptor;
 
 import com.edu.common.ResponseCode;
-import com.edu.common.RoleEnum;
 import com.edu.common.ServerResponse;
 import com.edu.pojo.User;
 import com.edu.untils.Const;
-import com.edu.untils.JsonUtils;
+import com.google.gson.Gson;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -32,7 +31,9 @@ public class UserInterceptor implements HandlerInterceptor {
                 response.setHeader("Content-Type","application/json;charset=UTF-8");
                 PrintWriter printWriter=response.getWriter();
                 ServerResponse serverResponse=ServerResponse.createServerResponseByError(ResponseCode.NO_LOGIN,"未登录");
-                String json= JsonUtils.obj2String(serverResponse);
+                Gson gson=new Gson();
+                String json = gson.toJson(serverResponse);
+                //                String json= JsonUtils.obj2String(serverResponse);
                 printWriter.write(json);
                 printWriter.flush();
                 printWriter.close();
@@ -47,12 +48,10 @@ public class UserInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        System.out.println(2222);
     }
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        System.out.println(3333);
     }
 
 }

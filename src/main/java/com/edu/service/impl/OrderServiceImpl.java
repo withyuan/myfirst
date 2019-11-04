@@ -421,7 +421,7 @@ public class OrderServiceImpl implements IOrderService {
                 .setUndiscountableAmount(undiscountableAmount).setSellerId(sellerId).setBody(body)
                 .setOperatorId(operatorId).setStoreId(storeId).setExtendParams(extendParams)
                 .setTimeoutExpress(timeoutExpress)
-                 .setNotifyUrl("http://aq95if.natappfree.cc/order/callback.do")
+                 .setNotifyUrl("http://vny7vw.natappfree.cc/order/callback.do")
                 //支付宝服务器主动通知商户服务器里指定的页面http路径,根据需要设置
                 .setGoodsDetailList(goodsDetailList);
 

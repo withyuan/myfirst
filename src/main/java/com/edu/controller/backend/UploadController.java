@@ -31,7 +31,7 @@ public class UploadController {
 
     @PostMapping("upload")
     @ResponseBody
-    public ServerResponse upload(@Param("multipartFile")MultipartFile multipartFile){
+    public ServerResponse upload(@Param( "multipartFile")MultipartFile multipartFile){
         if (multipartFile==null||multipartFile.getOriginalFilename().equals("")){
 
             return ServerResponse.createServerResponseByError(ResponseCode.ERROR,"图片必须上传");

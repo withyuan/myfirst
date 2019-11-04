@@ -2,7 +2,7 @@ spring:
   profiles:
     active: prod
 business:
-  imageHost: http://localhost/
+  imageHost: http://localhost:8088/uploadpic/
 
 logging:
   config: classpath:logback-spring.xml

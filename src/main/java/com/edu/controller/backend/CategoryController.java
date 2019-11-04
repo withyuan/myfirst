@@ -1,18 +1,12 @@
 package com.edu.controller.backend;
 
-import com.edu.common.ResponseCode;
-import com.edu.common.RoleEnum;
 import com.edu.common.ServerResponse;
 import com.edu.pojo.Category;
-import com.edu.pojo.User;
 import com.edu.service.impl.CategoryServiceImpl;
-import com.edu.untils.Const;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpSession;
 
 /**
  * 类别接口
