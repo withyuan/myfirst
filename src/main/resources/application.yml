@@ -10,3 +10,7 @@ logging:
     dao: debug
     org:
       mybatis: debug
+#关闭订单时间
+order:
+  close:
+    tiomeout: 1

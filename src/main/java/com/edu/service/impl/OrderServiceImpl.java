@@ -333,6 +333,39 @@ public class OrderServiceImpl implements IOrderService {
         return ServerResponse.createServerResponseBySuccess("发货成功");
     }
 
+    @Override
+    public List<Order> closeOrder(String closeOrderDate) {
+        List<Order> orderList= orderMapper.selectOrdersByCreateTime(closeOrderDate);
+        //关闭订单
+        if(orderList==null||orderList.size()==0){
+            return null;
+        }
+        for (Order order:orderList
+             ) {
+            //查询订单明细、回复库存
+            List<OrderItem> orderItemList = orderItemMapper.findOrderItemByOrderNo(order.getOrderNo());
+            for (OrderItem orderItem:orderItemList
+            ) {
+                ServerResponse<Product> serverResponse = productService.findProductById(orderItem.getProductId());
+                if(!serverResponse.isSuccess()){
+                    //商品不存在
+                    continue;//执行下一个订单明细
+                }
+                Product product = serverResponse.getData();
+                //去修改库存
+                int stock=  product.getStock()+orderItem.getQuantity();
+              productService.reduceProductStock(orderItem.getProductId(), stock);
+
+                }
+            //关闭订单 修改订单状态
+            orderMapper.closeOrder(order.getId());
+        }
+
+
+
+        return null;
+    }
+
     private static Log log = LogFactory.getLog(Main.class);
 
     // 支付宝当面付2.0服务

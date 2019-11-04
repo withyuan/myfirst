@@ -123,4 +123,27 @@
     update_time = now()
     where id = #{id,jdbcType=INTEGER}
   </update>
+<!--  selectOrdersByCreateTime-->
+  <select id="selectOrdersByCreateTime" parameterType="string" resultMap="BaseResultMap">
+    select id, user_id, order_no, shipping_id, payment, payment_type, postage, status,
+    payment_time, send_time, end_time, close_time, create_time, update_time
+    from neuedu_order
+    where
+    <![CDATA[
+     create_time <= #{time} and status=10
+    ]]>
+  </select>
+<!--  closeOrder-->
+  <update id="closeOrder" parameterType="int">
+    update neuedu_order
+    set
+    status = 60,
+    update_time = now(),
+    close_time=now(),
+    end_time=now()
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+
 </mapper>

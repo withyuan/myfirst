@@ -28,13 +28,11 @@ public class LoginInterceptor implements HandlerInterceptor {
         if(user==null){
             response.reset();
             try {
-                response.setCharacterEncoding("UTF-8");
                 response.setHeader("Content-Type","application/json;charset=UTF-8");
                 PrintWriter printWriter=response.getWriter();
                 ServerResponse serverResponse=ServerResponse.createServerResponseByError(ResponseCode.NO_LOGIN,"未登录");
                 Gson gson=new Gson();
                 String json=gson.toJson(serverResponse);
-//                String json= JsonUtils.obj2String(serverResponse);
                 printWriter.write(json);
                 printWriter.flush();
                 printWriter.close();
@@ -54,7 +52,6 @@ public class LoginInterceptor implements HandlerInterceptor {
                 ServerResponse serverResponse= ServerResponse.createServerResponseByError(ResponseCode.ERROR,"权限不足");
                 Gson gson=new Gson();
                 String json = gson.toJson(serverResponse);
-//                String json= JsonUtils.obj2String(serverResponse);
                 printWriter.write(json);
                 printWriter.flush();
                 printWriter.close();

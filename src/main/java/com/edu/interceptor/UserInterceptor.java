@@ -33,7 +33,6 @@ public class UserInterceptor implements HandlerInterceptor {
                 ServerResponse serverResponse=ServerResponse.createServerResponseByError(ResponseCode.NO_LOGIN,"未登录");
                 Gson gson=new Gson();
                 String json = gson.toJson(serverResponse);
-                //                String json= JsonUtils.obj2String(serverResponse);
                 printWriter.write(json);
                 printWriter.flush();
                 printWriter.close();

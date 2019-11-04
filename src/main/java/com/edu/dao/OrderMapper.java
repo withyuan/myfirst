@@ -1,7 +1,10 @@
 package com.edu.dao;
 
 import com.edu.pojo.Order;
+import com.sun.org.apache.xpath.internal.operations.Or;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import java.util.List;
 
@@ -66,6 +69,14 @@ public interface OrderMapper {
      * 发货
      */
    int updateOrderSend(Order order);
+    /**
+     *查询需要关闭的订单
+     */
+    List<Order> selectOrdersByCreateTime(@Param("time") String time);
+    /**
+     * 关闭订单
+     */
+    Integer closeOrder(@Param("id")Integer id);
 
 
 
