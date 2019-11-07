@@ -336,6 +336,7 @@ public class OrderServiceImpl implements IOrderService {
     @Override
     public List<Order> closeOrder(String closeOrderDate) {
         List<Order> orderList= orderMapper.selectOrdersByCreateTime(closeOrderDate);
+        System.out.println(11);
         //关闭订单
         if(orderList==null||orderList.size()==0){
             return null;
@@ -454,7 +455,7 @@ public class OrderServiceImpl implements IOrderService {
                 .setUndiscountableAmount(undiscountableAmount).setSellerId(sellerId).setBody(body)
                 .setOperatorId(operatorId).setStoreId(storeId).setExtendParams(extendParams)
                 .setTimeoutExpress(timeoutExpress)
-                 .setNotifyUrl("http://vny7vw.natappfree.cc/order/callback.do")
+                 .setNotifyUrl("http://kphjts.natappfree.cc/order/callback.do")
                 //支付宝服务器主动通知商户服务器里指定的页面http路径,根据需要设置
                 .setGoodsDetailList(goodsDetailList);
 

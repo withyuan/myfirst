@@ -6,9 +6,8 @@ import com.edu.common.ServerResponse;
 import com.edu.pojo.User;
 import com.edu.service.IUserService;
 import com.edu.untils.Const;
-import com.edu.untils.MD5Utils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping(value = "/user/")
+@CrossOrigin
 public class UserController {
     @Autowired
     IUserService userService;

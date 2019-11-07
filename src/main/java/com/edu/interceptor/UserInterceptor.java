@@ -6,6 +6,7 @@ import com.edu.pojo.User;
 import com.edu.untils.Const;
 import com.google.gson.Gson;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -19,6 +20,7 @@ import java.io.PrintWriter;
  * 自定义普通用户登录拦截器
  */
 @Component
+@CrossOrigin
 public class UserInterceptor implements HandlerInterceptor {
 
     @Override
@@ -28,6 +30,7 @@ public class UserInterceptor implements HandlerInterceptor {
         if(user==null){
             response.reset();
             try {
+                response.setHeader("Access-Control-Allow-Origin", "*");
                 response.setHeader("Content-Type","application/json;charset=UTF-8");
                 PrintWriter printWriter=response.getWriter();
                 ServerResponse serverResponse=ServerResponse.createServerResponseByError(ResponseCode.NO_LOGIN,"未登录");

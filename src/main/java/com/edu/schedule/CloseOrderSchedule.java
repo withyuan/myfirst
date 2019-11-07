@@ -18,9 +18,8 @@ public class CloseOrderSchedule {
     private  int orderTimeout;
     @Autowired
     IOrderService orderService;
-
-    @Scheduled(cron = "* * */1 * * *")
-    public  void closeOrder(){
+    @Scheduled(cron = "0 0 0/1 * * ?")
+    public void closeOrder(){
         //1.时间减法
         Date closeOrderTime = DateUtils.addHours(new Date(), -orderTimeout);
         orderService.closeOrder(com.edu.untils.DateUtils.dateToStr(closeOrderTime));
