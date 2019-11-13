@@ -15,7 +15,6 @@ import com.alipay.demo.trade.service.impl.AlipayTradeWithHBServiceImpl;
 import com.alipay.demo.trade.utils.ZxingUtils;
 import com.edu.alipay.Main;
 import com.edu.common.*;
-import com.edu.controller.front.OrderController;
 import com.edu.dao.OrderItemMapper;
 import com.edu.dao.OrderMapper;
 import com.edu.dao.PayInfoMapper;
@@ -30,15 +29,12 @@ import com.edu.vo.*;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
-import lombok.AllArgsConstructor;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -64,7 +60,9 @@ public class OrderServiceImpl implements IOrderService {
     IShippingService shippingService;
     @Autowired
     PayInfoMapper payInfoMapper;
-    @Value("${business.imageHost}")
+    @Value("${business.payImageHost}")
+    private String payImageHost;
+    @Value("${product.ImageHost}")
     private String imageHost;
     @Override
     public ServerResponse create(Integer userId, Integer shippingId) {
@@ -367,6 +365,7 @@ public class OrderServiceImpl implements IOrderService {
         return null;
     }
 
+
     private static Log log = LogFactory.getLog(Main.class);
 
     // 支付宝当面付2.0服务
@@ -472,7 +471,7 @@ public class OrderServiceImpl implements IOrderService {
                         response.getOutTradeNo());
                 log.info("filePath:" + filePath);
                 ZxingUtils.getQRCodeImge(response.getQrCode(), 256, filePath);
-                PayVO payVO=new PayVO(order.getOrderNo(),imageHost+"qr-"+response.getOutTradeNo()+".png");
+                PayVO payVO=new PayVO(order.getOrderNo(),payImageHost+"qr-"+response.getOutTradeNo()+".png");
                 return  ServerResponse.createServerResponseBySuccess(payVO);
 
             case FAILED:

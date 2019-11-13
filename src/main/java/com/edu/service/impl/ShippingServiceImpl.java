@@ -6,8 +6,10 @@ import com.edu.common.ServerResponse;
 import com.edu.dao.ShippingMapper;
 import com.edu.pojo.Shipping;
 import com.edu.service.IShippingService;
+import com.edu.vo.ShippingVVOO;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -89,8 +91,9 @@ public class ShippingServiceImpl implements IShippingService {
        //查询之前写
         PageHelper.startPage(pageNum,pageSize);
         List<Shipping> shippingList = shippingMapper.selectAllByUserId(userId);
-        PageInfo pageInfo=new PageInfo(shippingList);
-
+        //去修改变成VO
+        List<ShippingVVOO> shippingVVOOS= assemm(shippingList);
+        PageInfo pageInfo=new PageInfo(shippingVVOOS);
         return ServerResponse.createServerResponseBySuccess(pageInfo);
     }
 
@@ -108,4 +111,23 @@ public class ShippingServiceImpl implements IShippingService {
         }
         return ServerResponse.createServerResponseBySuccess();
     }
+    private List<ShippingVVOO> assemm(List<Shipping> shippingList){
+
+        List<ShippingVVOO> shippingVVOOArrayList= Lists.newArrayList();
+
+        for (Shipping shipping:shippingList){
+            ShippingVVOO shippingVVOO=new ShippingVVOO();
+                          shippingVVOO.setId(shipping.getId());
+                          shippingVVOO.setAddress(shipping.getReceiverProvince()+
+                                  shipping.getReceiverCity()+
+                                  shipping.getReceiverDistrict()+
+                                  shipping.getReceiverAddress());
+                          shippingVVOO.setName(shipping.getReceiverName());
+                          shippingVVOO.setTel(shipping.getReceiverPhone());
+            shippingVVOOArrayList.add(shippingVVOO);
+        }
+            return shippingVVOOArrayList;
+
+    }
+
 }

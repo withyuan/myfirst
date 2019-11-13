@@ -27,7 +27,7 @@ import java.util.Set;
 public class ProductImpl implements IProductService {
 
 
-    @Value("${business.imageHost}")
+    @Value("${product.ImageHost}")
     private String imageHost;
     @Autowired
     ProductMapper productMapper;

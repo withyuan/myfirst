@@ -3,14 +3,12 @@ package com.edu.controller.front;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.demo.trade.config.Configs;
-import com.edu.common.ResponseCode;
 import com.edu.common.ServerResponse;
 import com.edu.pojo.User;
 import com.edu.service.IOrderService;
 import com.edu.untils.Const;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -85,7 +83,7 @@ public class OrderController {
      */
     @RequestMapping("list.do")
     public ServerResponse list(@RequestParam(required = false, defaultValue = "1") Integer pageNum,
-                               @RequestParam(required = false, defaultValue = "10") Integer pageSize,
+                               @RequestParam(required = false, defaultValue = "20") Integer pageSize,
                                HttpSession session) {
 
 

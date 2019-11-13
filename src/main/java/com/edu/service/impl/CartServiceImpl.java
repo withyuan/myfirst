@@ -13,7 +13,6 @@ import com.edu.vo.CartProductVO;
 import com.edu.vo.CartVO;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheAnnotationParser;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -55,7 +54,8 @@ public class CartServiceImpl implements ICartService {
             Cart newCart = new Cart();
             newCart.setUserId(userId);
             newCart.setProductId(productId);
-            newCart.setChecked(CheckEnum.CART_PRODUCT_CHECK.getCheck());
+            //默认未选中
+            newCart.setChecked(CheckEnum.CART_PRODUCT_UNCHECK.getCheck());
             newCart.setQuantity(count);
             int result = cartMapper.insert(newCart);
             if (result <= 0) {

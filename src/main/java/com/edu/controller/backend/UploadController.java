@@ -19,7 +19,7 @@ import java.util.UUID;
 @Controller
 @RequestMapping(value = "/manage/")
 public class UploadController {
-        @Value("${business.imageHost}")
+        @Value("${business.payImageHost}")
         private String imageHost;
 
 

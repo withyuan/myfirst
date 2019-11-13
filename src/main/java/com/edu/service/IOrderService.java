@@ -2,7 +2,6 @@ package com.edu.service;
 
 import com.edu.common.ServerResponse;
 import com.edu.pojo.Order;
-import com.sun.org.apache.xpath.internal.operations.Or;
 
 import java.util.List;
 import java.util.Map;
@@ -56,5 +55,6 @@ public interface IOrderService {
      * 查询需要关闭的订单
      */
     public List<Order> closeOrder(String closeOrderDate);
+
 
 }
