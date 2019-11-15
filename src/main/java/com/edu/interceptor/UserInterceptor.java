@@ -30,7 +30,7 @@ public class UserInterceptor implements HandlerInterceptor {
         if(user==null){
             response.reset();
             try {
-                response.setHeader("Access-Control-Allow-Origin", "*");
+                response.setHeader("Access-Control-Allow-Origin","*");
                 response.setHeader("Content-Type","application/json;charset=UTF-8");
                 PrintWriter printWriter=response.getWriter();
                 ServerResponse serverResponse=ServerResponse.createServerResponseByError(ResponseCode.NO_LOGIN,"未登录");

@@ -2,7 +2,6 @@ package com.edu.dao;
 
 import com.edu.pojo.Product;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Set;
@@ -71,6 +70,10 @@ public interface    ProductMapper {
      */
     int reduceProductStock(@Param("productId") Integer productId,@Param("stock") Integer stock);
 
+    /**
+     * 是否热销
+     */
 
+    List<Product>   selectIsNotHot();
 
 }

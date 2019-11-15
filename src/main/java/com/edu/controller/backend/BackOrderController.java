@@ -3,15 +3,13 @@ package com.edu.controller.backend;
 import com.edu.common.ServerResponse;
 import com.edu.service.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 /**
  * 后台订单模块
  */
+@CrossOrigin
 @RestController
 @RequestMapping("/manage/order/")
 public class BackOrderController {

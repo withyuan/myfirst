@@ -1,20 +1,18 @@
 package com.edu.controller.front;
 
-import com.edu.common.ResponseCode;
 import com.edu.common.ServerResponse;
 import com.edu.pojo.Shipping;
 import com.edu.pojo.User;
 import com.edu.service.IShippingService;
 import com.edu.untils.Const;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
-
+@CrossOrigin
 @RestController
 @RequestMapping("/shipping/")
 public class ShippingController {

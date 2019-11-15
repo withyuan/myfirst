@@ -1,23 +1,15 @@
 package com.edu.controller.backend;
 
-import com.edu.common.ResponseCode;
-import com.edu.common.RoleEnum;
 import com.edu.common.ServerResponse;
 import com.edu.pojo.Product;
-import com.edu.pojo.User;
 import com.edu.service.IProductService;
-import com.edu.untils.Const;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 商品接口
  */
+@CrossOrigin
 @RestController
 @RequestMapping("/manage/product")
 public class ProductController {

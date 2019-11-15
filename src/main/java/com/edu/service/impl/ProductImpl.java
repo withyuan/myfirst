@@ -275,6 +275,34 @@ public class ProductImpl implements IProductService {
         return ServerResponse.createServerResponseBySuccess(product);
     }
 
+    /**
+     *  根据是否热销查询
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @Override
+    public ServerResponse hotList(Integer pageNum, Integer pageSize) {
+        //先按分页查询
+        PageHelper.startPage(pageNum, pageSize);
+        //去查询状态是热销的产品
+        List<Product> productList = productMapper.selectIsNotHot();
+        //编成VO
+        List<ProductListVO> productListVOS = Lists.newArrayList();
+        if (productList != null && productList.size() > 0) {
+            for (Product p : productList
+            ) {
+                ProductListVO productListVO = assembleProductListVO(p);//调用方法把POJO转换成VO
+                productListVOS.add(productListVO);//转换好的存放到VO容器中
+            }
+        }
+        //分页
+        PageInfo pageInfo = new PageInfo();
+        pageInfo.setList(productListVOS);
+        return ServerResponse.createServerResponseBySuccess(pageInfo);
+
+    }
+
 
     private ProductListVO assembleProductListVO(Product product) {
         ProductListVO productListVO = new ProductListVO();

@@ -2,7 +2,6 @@ package com.edu.service;
 
 import com.edu.common.ServerResponse;
 import com.edu.pojo.Product;
-import com.edu.vo.ProductDetailVO;
 
 /**
  * 商品服务接口
@@ -50,4 +49,9 @@ public interface IProductService {
      * 查询product
      */
     ServerResponse<Product> selectProduct(Integer productId);
+    /**
+     * hotList
+     * 查询热销产品
+     */
+    ServerResponse hotList(Integer pageNum,Integer pageSize);
 }

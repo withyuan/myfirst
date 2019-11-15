@@ -33,6 +33,20 @@ public class FrontProductController {
 
     }
     /**
+     * 前台查看热销商品
+     *
+     */
+    @RequestMapping("hot.do")
+    public ServerResponse hotList(
+                               @RequestParam(required = false,defaultValue = "1")Integer pageNum,
+                               @RequestParam(required = false,defaultValue = "10")Integer pageSize
+                               ){
+
+        return  productService.hotList(pageNum,pageSize);
+
+    }
+
+    /**
      * 前台查看商品详情
      * /product/detail.do
      * productId
