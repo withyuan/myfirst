@@ -1,12 +1,7 @@
 spring:
   profiles:
-    active: prod
-business:
-  payImageHost: http://localhost:8088/uploadpic/
+    active: line
 
-
-product:
-  ImageHost: http://img.cdn.imbession.top/
 
 logging:
   config: classpath:logback-spring.xml
@@ -17,4 +12,4 @@ logging:
 #关闭订单时间
 order:
   close:
-    tiomeout: 1
+    tiomeout: 10

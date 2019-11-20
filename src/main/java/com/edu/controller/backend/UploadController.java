@@ -39,7 +39,8 @@ public class UploadController {
         String extendName=  oldFileName.substring(oldFileName.lastIndexOf("."));
         //生成新的文件名
         String newFilename= UUID.randomUUID().toString()+extendName;
-        File mkdir=new File("e:/upload");
+//        File mkdir=new File("e:/upload");
+          File mkdir=new File("/usr/neuedu/front/uploadpic");
         if(!mkdir.exists()){
             mkdir.mkdirs();
         }

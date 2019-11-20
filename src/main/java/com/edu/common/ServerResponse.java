@@ -23,10 +23,27 @@ public class ServerResponse<T> {
     private int  status;//返回到前端的状态码
     private T data;//返回给前端的数据
     private String msg;//当status！=0时，封装了错误信息
+    private int count;//返回总数
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
 
     private ServerResponse() {
 
     }
+
+    public ServerResponse(int status, T data, String msg, int count) {
+        this.status = status;
+        this.data = data;
+        this.msg = msg;
+        this.count = count;
+    }
+
     private ServerResponse(int status) {
         this.status = status;
     }
@@ -44,7 +61,11 @@ public class ServerResponse<T> {
         this.data = data;
         this.msg = msg;
     }
-
+    private ServerResponse(int status, T data, int  count) {
+        this.status = status;
+        this.data = data;
+        this.count =count;
+    }
 
     /**
      *调用接口成功时回调
@@ -59,6 +80,9 @@ public class ServerResponse<T> {
         return new ServerResponse(ResponseCode.SUCESS,data,msg);
     }
 
+    public  static  <T> ServerResponse createServerResponseBySuccess(T data,int count){
+        return new ServerResponse(ResponseCode.SUCESS,data,count);
+    }
 
     /**
      * 接口调用失败时回调

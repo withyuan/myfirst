@@ -224,12 +224,15 @@ public class OrderServiceImpl implements IOrderService {
     public ServerResponse list(Integer userId, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum,pageSize);
         List<Order> orderList= Lists.newArrayList();
+        Integer count=0;
         if(userId==null){
             //查询所有
             orderList = orderMapper.selectAll();
+             count= orderMapper.selectCount();
 
         }else {
             //查询当前用户
+            count= orderMapper.selectOneCount(userId);
            orderList= orderMapper.findOrderByUserId(userId);
         }
         if(orderList==null||orderList.size()==0){
@@ -247,7 +250,8 @@ public class OrderServiceImpl implements IOrderService {
 
         }
         PageInfo pageInfo=new PageInfo(orderVOList);
-        return ServerResponse.createServerResponseBySuccess(pageInfo);
+        //去查询总页数
+        return ServerResponse.createServerResponseBySuccess(pageInfo,count);
     }
 
     @Override
@@ -454,7 +458,7 @@ public class OrderServiceImpl implements IOrderService {
                 .setUndiscountableAmount(undiscountableAmount).setSellerId(sellerId).setBody(body)
                 .setOperatorId(operatorId).setStoreId(storeId).setExtendParams(extendParams)
                 .setTimeoutExpress(timeoutExpress)
-                 .setNotifyUrl("http://bh5258.natappfree.cc/order/callback.do")
+                 .setNotifyUrl("http://121.36.13.233:8080/order/callback.do")
                 //支付宝服务器主动通知商户服务器里指定的页面http路径,根据需要设置
                 .setGoodsDetailList(goodsDetailList);
 
@@ -466,8 +470,9 @@ public class OrderServiceImpl implements IOrderService {
                 AlipayTradePrecreateResponse response = result.getResponse();
                 dumpResponse(response);
 
-                // 需要修改为运行机器上的路径
-                String filePath = String.format("e:/upload/qr-%s.png",
+                // 需要修改为运行机器上的路径e:/upload/
+                // /usr/neuedu/front/uploadpic
+                String filePath = String.format("/usr/neuedu/front/uploadpic/qr-%s.png",
                         response.getOutTradeNo());
                 log.info("filePath:" + filePath);
                 ZxingUtils.getQRCodeImge(response.getQrCode(), 256, filePath);

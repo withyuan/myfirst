@@ -144,6 +144,16 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-
+<!--  selectCount-->
+  <select id="selectCount" resultType="int">
+    select count(id)
+    from neuedu_order
+  </select>
+<!--  selectOneCount 查询一个人的订单总数-->
+  <select id="selectOneCount" parameterType="java.lang.Integer" resultType="int">
+    select count(id)
+    from neuedu_order
+    where   user_id=#{userId}
+  </select>
 
 </mapper>

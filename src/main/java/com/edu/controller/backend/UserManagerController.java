@@ -5,13 +5,10 @@ import com.edu.common.ServerResponse;
 import com.edu.service.IUserService;
 import com.edu.untils.Const;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
-@CrossOrigin
 @RestController
 @RequestMapping(value = "/manage/")
 public class UserManagerController {
@@ -20,9 +17,9 @@ public class UserManagerController {
     /**
      * 登录接口
      */
-    @RequestMapping(value= "login/{username}/{password}")
-    public ServerResponse login(@PathVariable("username")String username,
-                                @PathVariable("password")String password,
+    @RequestMapping(value= "login")
+    public ServerResponse login(String username,
+                                String password,
                                 HttpSession session){
         ServerResponse serverResponse = userService.login(username, password, RoleEnum.ROLE_ADMIN.getRole());
         if (serverResponse.isSuccess()){

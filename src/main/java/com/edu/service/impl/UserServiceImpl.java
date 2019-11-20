@@ -71,7 +71,7 @@ public class UserServiceImpl implements IUserService {
         }
         if (type == 0) {//管理员
             if (user.getRole() == RoleEnum.ROLE_User.getRole()) {//没有权限
-                return ServerResponse.createServerResponseBySuccess(ResponseCode.ERROR, "登录权限不足");
+                return ServerResponse.createServerResponseByError(ResponseCode.ERROR, "登录权限不足");
 
 
             }
