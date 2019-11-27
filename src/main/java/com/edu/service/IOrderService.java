@@ -55,6 +55,11 @@ public interface IOrderService {
      * 查询需要关闭的订单
      */
     public List<Order> closeOrder(String closeOrderDate);
+    /**
+     * 确认收货
+     */
+    ServerResponse confirm(Integer userId,Long orderNo);
+
 
 
 }

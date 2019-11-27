@@ -2,7 +2,7 @@ package com.edu.controller.backend;
 
 import com.edu.common.ServerResponse;
 import com.edu.pojo.Category;
-import com.edu.service.impl.CategoryServiceImpl;
+import com.edu.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/manage/category/")
 public class CategoryController {
     @Autowired
-   private  CategoryServiceImpl categoryService;
+   private ICategoryService categoryService;
 
     /**
      * 添加类别manage/category/add_category.do

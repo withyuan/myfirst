@@ -119,7 +119,17 @@ public class OrderController {
         Integer userId = user.getId();
         return orderService.concel(userId, orderNo);
     }
+    /**
+     * 确认收货
+     * /order/confirm.do
+     */
+    @RequestMapping("confirm/{orderNo}")
+    public ServerResponse confirm(@PathVariable("orderNo") Long orderNo, HttpSession session) {
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
 
+        Integer userId = user.getId();
+        return orderService.confirm(userId, orderNo);
+    }
 
     /**
      * 支付宝服务回调商家服务器接口

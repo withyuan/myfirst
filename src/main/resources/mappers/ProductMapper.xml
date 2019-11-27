@@ -129,9 +129,6 @@
       <if test="productName!=null">
           and  name like #{productName}
       </if>
-
-
-
     </where>
 
   </select>
@@ -160,6 +157,17 @@
     select * from neuedu_product where  is_new = 1
   </select>
 
+<!--  selectCount-->
+  <select id="selectCount" resultType="int" parameterType="map">
+    select count(id) from neuedu_product
+    <where>
+      <if test="productId!=null">
+        and  id=#{productId}
+      </if>
+      <if test="productName!=null">
+        and  name like #{productName}
+      </if>
+    </where>
 
-
+  </select>
 </mapper>

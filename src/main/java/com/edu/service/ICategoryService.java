@@ -30,5 +30,9 @@ public interface ICategoryService {
      * 根据ID查询类别
      */
     ServerResponse<Category> selectCategoryById(Integer categoryId);
+    /**
+     * 查看类别
+     */
+    ServerResponse showCategory(Integer pageNum,Integer pageSize);
 
 }

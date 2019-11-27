@@ -115,10 +115,11 @@ public class ProductImpl implements IProductService {
                 productListVOS.add(productListVO);
             }
         }
+        Integer count = productMapper.selectCount(productId, productName);
         PageInfo pageInfo = new PageInfo(productListVOS);
 
 
-        return ServerResponse.createServerResponseBySuccess(pageInfo);
+        return ServerResponse.createServerResponseBySuccess(pageInfo,count);
     }
 
     @Override

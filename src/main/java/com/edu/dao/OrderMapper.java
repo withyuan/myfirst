@@ -82,6 +82,10 @@ public interface OrderMapper {
      * selectOneCount查询个人的总数
       */
     Integer selectOneCount(@Param("userId")Integer userId);
+    /**
+     * updateOrderSucess确认收货
+     */
+    int updateOrderSuccess(Order order);
 
 
 }

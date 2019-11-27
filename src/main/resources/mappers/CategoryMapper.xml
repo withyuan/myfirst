@@ -47,6 +47,12 @@
       <if test="name!=null">
         name=#{name},
       </if>
+      <if test="parentId!=null">
+        parent_id=#{parentId},
+      </if>
+      <if test="status!=null">
+        status=#{status},
+      </if>
       update_time = now()
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -75,4 +81,10 @@
     where  parent_id=#{categoryId}
 
   </select>
+<!--  selectCount-->
+  <select id="selectCount"  resultType="int">
+    select count(id)
+    from neuedu_category
+  </select>
+
 </mapper>

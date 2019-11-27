@@ -5,6 +5,11 @@ import com.edu.common.ServerResponse;
 import com.edu.dao.CategoryMapper;
 import com.edu.pojo.Category;
 import com.edu.service.ICategoryService;
+import com.edu.untils.DateUtils;
+import com.edu.vo.CategoryVO;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -82,6 +87,37 @@ public class CategoryServiceImpl implements ICategoryService {
         }
         Category category = categoryMapper.selectByPrimaryKey(categoryId);
         return ServerResponse.createServerResponseBySuccess(category);
+    }
+
+    @Override
+    public ServerResponse showCategory(Integer pageNum, Integer pageSize) {
+        //先按分页查询
+        PageHelper.startPage(pageNum, pageSize);
+        //去找Mapper展示所有
+        List<Category> categoryList = categoryMapper.selectAll();
+        //List<Category>转换成List<CategoryVO>
+        List<CategoryVO> categoryVOS=Lists.newArrayList();
+        for(Category c:categoryList){
+                    //一个个的C转换成VO
+                    CategoryVO categoryVO=new CategoryVO();
+                    categoryVO.setId(c.getId());
+                    categoryVO.setName(c.getName());
+                    categoryVO.setMainImage(c.getMainImage());
+                    categoryVO.setParentId(c.getParentId());
+                    categoryVO.setSortOrder(c.getSortOrder());
+                    categoryVO.setCreateTime(DateUtils.dateToStr(c.getCreateTime()));
+                    categoryVO.setUpdateTime(DateUtils.dateToStr(c.getUpdateTime()));
+                    categoryVO.setStatus(c.getStatus());
+                    //一个个放进去
+            categoryVOS.add(categoryVO);
+        }
+        PageInfo pageInfo = new PageInfo();
+        pageInfo.setList(categoryVOS);
+
+        //查询有多少类别
+        Integer count = categoryMapper.selectCount();
+
+        return ServerResponse.createServerResponseBySuccess(pageInfo,count);
     }
 
     /**

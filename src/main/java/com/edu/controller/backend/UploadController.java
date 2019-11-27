@@ -6,7 +6,10 @@ import com.edu.vo.ImageVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -20,15 +23,9 @@ public class UploadController {
         private String imageHost;
 
 
-
-    @GetMapping("upload")
-    public  String upload(){
-        return "upload";
-    }
-
     @PostMapping("upload")
     @ResponseBody
-    public ServerResponse upload(@Param( "multipartFile")MultipartFile multipartFile){
+    public ServerResponse upload(@Param("multipartFile")MultipartFile multipartFile){
         if (multipartFile==null||multipartFile.getOriginalFilename().equals("")){
 
             return ServerResponse.createServerResponseByError(ResponseCode.ERROR,"图片必须上传");
@@ -39,8 +36,8 @@ public class UploadController {
         String extendName=  oldFileName.substring(oldFileName.lastIndexOf("."));
         //生成新的文件名
         String newFilename= UUID.randomUUID().toString()+extendName;
-//        File mkdir=new File("e:/upload");
-          File mkdir=new File("/usr/neuedu/front/uploadpic");
+        File mkdir=new File("e:/upload");
+//       线上     File mkdir=new File("/usr/neuedu/front/uploadpic");
         if(!mkdir.exists()){
             mkdir.mkdirs();
         }

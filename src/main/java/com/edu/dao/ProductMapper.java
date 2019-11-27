@@ -75,5 +75,10 @@ public interface    ProductMapper {
      */
 
     List<Product>   selectIsNotHot();
+    /**
+     * 根据ID和name查询数量
+     */
+    Integer selectCount(@Param("productId")Integer productId,
+                         @Param("productName")String productName);
 
 }

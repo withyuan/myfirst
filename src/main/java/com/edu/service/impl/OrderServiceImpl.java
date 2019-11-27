@@ -369,6 +369,30 @@ public class OrderServiceImpl implements IOrderService {
         return null;
     }
 
+    @Override
+    public ServerResponse confirm(Integer userId, Long orderNo) {
+        //step1:参数非空校验
+        if(orderNo==null){
+            return  ServerResponse.createServerResponseByError(ResponseCode.ERROR,"参数不能为空");
+        }//step2:根据userId和orderNO查询订单
+        Order order=orderMapper.findOrderByUserIdAndOrderNo(userId, orderNo);
+        if(order==null){
+            return  ServerResponse.createServerResponseByError(ResponseCode.ERROR,"订单不存在");
+        }
+        //确认收货订单状态应该是已经发货
+        if(order.getStatus()!=OrderStatusEnum.ORDER_SEND.getStatus()){
+            return ServerResponse.createServerResponseByError(ResponseCode.ERROR, "订单状态不是已发货 不可确认收货");
+        }
+        //修改订单状态修改成校验成功的
+        order.setStatus(OrderStatusEnum.ORDER_SUCCESS.getStatus());
+        int result= orderMapper.updateOrderSuccess(order);
+        if(result<=0){
+            return ServerResponse.createServerResponseByError(ResponseCode.ERROR, "确认收货失败");
+        }
+        return ServerResponse.createServerResponseBySuccess("确认收货成功");
+
+    }
+
 
     private static Log log = LogFactory.getLog(Main.class);
 
@@ -472,7 +496,7 @@ public class OrderServiceImpl implements IOrderService {
 
                 // 需要修改为运行机器上的路径e:/upload/
                 // /usr/neuedu/front/uploadpic
-                String filePath = String.format("/usr/neuedu/front/uploadpic/qr-%s.png",
+                String filePath = String.format("e:/upload//qr-%s.png",
                         response.getOutTradeNo());
                 log.info("filePath:" + filePath);
                 ZxingUtils.getQRCodeImge(response.getQrCode(), 256, filePath);

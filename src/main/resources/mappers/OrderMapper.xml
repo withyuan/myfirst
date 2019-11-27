@@ -155,5 +155,16 @@
     from neuedu_order
     where   user_id=#{userId}
   </select>
+<!--  updateOrderSuccess-->
+  <update id="updateOrderSuccess" parameterType="com.edu.pojo.Order">
+
+    update neuedu_order
+    set
+    status = #{status,jdbcType=INTEGER},
+    end_time = now(),
+    update_time = now(),
+    close_time = now()
+    where id = #{id,jdbcType=INTEGER}
+  </update>
 
 </mapper>

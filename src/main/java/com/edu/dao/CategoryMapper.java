@@ -47,5 +47,9 @@ public interface CategoryMapper {
      * 根据ID获取平级
      */
     List<Category> selectCategoryById(int categoryId);
+    /**
+     * 查询多少类别
+     */
+    Integer selectCount();
 
 }
