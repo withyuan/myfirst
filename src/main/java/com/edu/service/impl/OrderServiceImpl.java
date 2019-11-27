@@ -35,6 +35,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -64,6 +65,8 @@ public class OrderServiceImpl implements IOrderService {
     private String payImageHost;
     @Value("${product.ImageHost}")
     private String imageHost;
+
+    @Transactional
     @Override
     public ServerResponse create(Integer userId, Integer shippingId) {
       /*  //1. 参数非空

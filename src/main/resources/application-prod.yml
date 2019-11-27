@@ -44,3 +44,18 @@ pagehelper:
 logging:
   level:
     com.edu.dao: debug
+#配置redis链接参数
+redis:
+  max:
+    total: 8
+    idle: 8
+  min:
+    idle: 2
+  test:
+    borrow: true
+    return: true
+  ip: 121.36.13.233
+  port: 5379
+  password: quwosulilei521@
+  timeout: 2000
+
