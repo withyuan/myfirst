@@ -15,7 +15,7 @@ public class Hello {
     @RequestMapping("/testjedis")
     public String testJedis(){
         redisApi.set("java", "jsp");
-        return redisApi.get("java");
+        return redisApi.get("java",String.class);
 
 
     }

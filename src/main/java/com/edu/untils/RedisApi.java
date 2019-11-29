@@ -6,58 +6,111 @@ import redis.clients.jedis.Jedis;
 
 public class RedisApi {
     @Autowired
-    RedisPoll redisPoll;
-/**
- * 字符串
- */
-    public  String set(String key,String value){
+    RedisPoll jedisPool;
 
-        Jedis jedis = redisPoll.getJedis();
+    /**
+     * @param  key
+     * @param  t
+     * 添加key-value
+     * */
+    public   <T>   String  set(String key,T t){
+
+        Jedis jedis=null;
         String result=null;
         try{
-            result= jedis.set(key,value);
-            redisPoll.returnJedis(jedis);
-        }catch (Exception e){
-            redisPoll.returnBrokenResource(jedis);
+            jedis=jedisPool.getJedis();
+            String jsonvalue=JsonUtils.obj2String(t);
+            result=jedis.set(key, jsonvalue);
+            return result;
+        } catch (Exception e){
+            e.printStackTrace();
+            jedisPool.returnBrokenResource(jedis);
+        }finally {
+            jedisPool.returnJedis(jedis);
         }
-        return result;
 
+        return  null;
     }
-    public  String get(String key){
+    /**
+     * get
+     * */
+    public <T> T get(String key,Class<T> clazz){
 
-        Jedis jedis = redisPoll.getJedis();
+        Jedis jedis=null;
+        try{
+            jedis=  jedisPool.getJedis();
+            String json=jedis.get(key);
+            T t=JsonUtils.string2Obj(json,clazz);
+            return t;
+        }catch (Exception e){
+            e.printStackTrace();
+            if(jedis!=null){
+                jedisPool.returnBrokenResource(jedis);
+            }
+        }finally {
+            if(jedis!=null){
+                jedisPool.returnJedis(jedis);
+            }
+        }
+        return null;
+    }
+    /**
+     * 设置过期时间的key-value
+     * */
+    public  <T>  String  setex(String key,T t,int expireTime){
+
+        Jedis jedis=null;
         String result=null;
         try{
-            result= jedis.get(key);
-            redisPoll.returnJedis(jedis);
-        }catch (Exception e){
-            redisPoll.returnBrokenResource(jedis);
+            jedis=jedisPool.getJedis();
+            String jsonvalue=JsonUtils.obj2String(t);
+            result=jedis.setex(key,expireTime, jsonvalue);
+        } catch (Exception e){
+            e.printStackTrace();
+            jedisPool.returnBrokenResource(jedis);
+        }finally {
+            jedisPool.returnJedis(jedis);
         }
-        return result;
-    }
-    public  String setex(String key,int timeout,String value){
 
-        Jedis jedis = redisPoll.getJedis();
-        String result=null;
-        try{
-            result= jedis.setex(key,timeout,value);
-            redisPoll.returnJedis(jedis);
-        }catch (Exception e){
-            redisPoll.returnBrokenResource(jedis);
-        }
-        return result;
+        return  result;
     }
-    public  Long expire(String key,int timeout){
+    /**
+     * 删除
+     * */
+    public    Long  del(String key){
 
-        Jedis jedis = redisPoll.getJedis();
+        Jedis jedis=null;
         Long result=null;
         try{
-            result= jedis.expire(key,timeout);
-            redisPoll.returnJedis(jedis);
-        }catch (Exception e){
-            redisPoll.returnBrokenResource(jedis);
+            jedis=jedisPool.getJedis();
+            result=jedis.del(key);
+        } catch (Exception e){
+            e.printStackTrace();
+            jedisPool.returnBrokenResource(jedis);
+        }finally {
+            jedisPool.returnJedis(jedis);
         }
-        return result;
+
+        return  result;
+    }
+    /**
+     * 设置key的有效时间
+     * */
+    public    Long  expire(String key,int expireTime){
+
+        Jedis jedis=null;
+        Long result=null;
+        try{
+            jedis=jedisPool.getJedis();
+            result=jedis.expire(key,expireTime);
+        } catch (Exception e){
+            e.printStackTrace();
+            jedisPool.returnBrokenResource(jedis);
+        }finally {
+            jedisPool.returnJedis(jedis);
+        }
+
+        return  result;
     }
 
 

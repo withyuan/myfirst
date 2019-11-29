@@ -19,7 +19,7 @@ public class LoginConfig implements WebMvcConfigurer {
 
 
         registry.addInterceptor(userInterceptor)
-                .addPathPatterns("/cart/**","/order/**","/shipping/**","/user/**")
+                .addPathPatterns("/cart/**","/order/**","/shipping/**","/user/**","/collect/**")
                 .excludePathPatterns("/user/register.do","/user/login/**","/user/forget_get_question/**"
                 ,"/user/forget_check_answer.do","/user/forget_reset_password.do",
                         "/user/logout.do","/order/callback.do");

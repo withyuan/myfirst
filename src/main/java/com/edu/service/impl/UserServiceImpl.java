@@ -114,7 +114,7 @@ public class UserServiceImpl implements IUserService {
         String token = UUID.randomUUID().toString();
 //        TokenCache.set("username:" + username, token);
         //redis存储token
-        redisApi.setex("username:"+username,12*3600,token);
+        redisApi.setex("username:"+username,token,12*3600);
 
         return ServerResponse.createServerResponseBySuccess(token);
     }
@@ -135,7 +135,7 @@ public class UserServiceImpl implements IUserService {
 
         //是否修改的自己账号
       //  String token = TokenCache.get("username:" + username);
-        String token = redisApi.get("username:"+username);
+        String token = redisApi.get("username:"+username,String.class);
         if (token == null) {
             return ServerResponse.createServerResponseByError(ResponseCode.ERROR, "不能修改他人密码或者token已经过期");
         }
