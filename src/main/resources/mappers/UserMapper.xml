@@ -147,5 +147,11 @@
     update neuedu_user set password=#{newpassword}, update_time=now() where id=#{id}
 
   </update>
+<!--  findUserNameByUserId-->
+  <select id="findUserNameByUserId"  parameterType="int"
+          resultType="string">
+    select  username  from neuedu_user where id=#{id}
+
+  </select>
 
 </mapper>

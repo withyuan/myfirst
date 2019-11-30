@@ -91,6 +91,9 @@ public interface UserMapper {
      * 登录状态下修改密码
      */
     int updateLoginPassword(@Param("id")int id,@Param("newpassword")String  newpassword  );
-
+    /**
+     * 根据userID查询用户
+     */
+       String findUserNameByUserId(Integer id);
 
 }

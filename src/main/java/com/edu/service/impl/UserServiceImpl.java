@@ -205,4 +205,13 @@ public class UserServiceImpl implements IUserService {
 
         return ServerResponse.createServerResponseBySuccess("修改密码成功");
     }
+
+    @Override
+    public String findUserNameByUserId(Integer userId) {
+        if(userId==null){
+            return null;
+        }
+        String username = userMapper.findUserNameByUserId(userId);
+        return username;
+    }
 }

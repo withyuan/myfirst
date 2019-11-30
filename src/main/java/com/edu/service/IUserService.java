@@ -37,6 +37,9 @@ public interface IUserService {
      * 登录状态下修改密码
      */
     ServerResponse  reset_password(String passwordOld,String passwordNew,String username);
-
+    /**
+     * 根据用户ID查用户名
+     */
+    String findUserNameByUserId(Integer userId);
 
 }
