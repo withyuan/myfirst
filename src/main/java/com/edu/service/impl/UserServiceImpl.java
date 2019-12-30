@@ -214,4 +214,13 @@ public class UserServiceImpl implements IUserService {
         String username = userMapper.findUserNameByUserId(userId);
         return username;
     }
+
+    @Override
+    public int updateUserStatus(String username, Integer role) {
+        //根据用户名去查询该用户
+        User user = userMapper.findUserByUserName(username);
+        //找见该用户去修改他的状态
+        user.setRole(role);
+        return userMapper.updateByPrimaryKey(user);
+    }
 }

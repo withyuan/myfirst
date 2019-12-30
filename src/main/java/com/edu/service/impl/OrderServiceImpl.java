@@ -499,7 +499,7 @@ public class OrderServiceImpl implements IOrderService {
 
                 // 需要修改为运行机器上的路径e:/upload/
                 // /usr/neuedu/front/uploadpic
-                String filePath = String.format("e:/upload//qr-%s.png",
+                String filePath = String.format("e:/upload/qr-%s.png",
                         response.getOutTradeNo());
                 log.info("filePath:" + filePath);
                 ZxingUtils.getQRCodeImge(response.getQrCode(), 256, filePath);

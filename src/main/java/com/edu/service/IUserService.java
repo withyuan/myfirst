@@ -41,5 +41,9 @@ public interface IUserService {
      * 根据用户ID查用户名
      */
     String findUserNameByUserId(Integer userId);
+    /**
+     * 更新用户角色
+     */
+    int updateUserStatus(String username,Integer role);
 
 }

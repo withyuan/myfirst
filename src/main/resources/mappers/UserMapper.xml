@@ -52,8 +52,7 @@
       question = #{question,jdbcType=VARCHAR},
       answer = #{answer,jdbcType=VARCHAR},
       role = #{role,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      update_time = now(),
       ip = #{ip,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -153,5 +152,11 @@
     select  username  from neuedu_user where id=#{id}
 
   </select>
+<!--  findUserByUserName-->
+  <select id="findUserByUserName"  parameterType="String" resultMap="BaseResultMap">
+    select  *  from neuedu_user where username=#{username}
+
+  </select>
+
 
 </mapper>

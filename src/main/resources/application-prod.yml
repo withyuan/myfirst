@@ -3,8 +3,11 @@ business:
   payImageHost: http://localhost:8088/uploadpic/
 
 
+
+#product:
+#  ImageHost: http://img.cdn.imbession.top/
 product:
-  ImageHost: http://img.cdn.imbession.top/
+  ImageHost: https://g0.fbcontent.cn/api/tutor/images/
 server:
   port: 8080
 spring:
@@ -18,8 +21,11 @@ spring:
       test-on-borrow: true
       test-on-return: true
       username: root
-      password: root
-      url: jdbc:mysql://localhost:3308/shopping?characterEncoding=utf8&serverTimezone=Asia/Shanghai
+      password: '@quwosulileiTMD521'
+      url: jdbc:mysql://121.36.13.233:3306/shopping?characterEncoding=utf8&serverTimezone=Asia/Shanghai
+#      password: root
+#      url: jdbc:mysql://localhost:3308/course?characterEncoding=utf8&serverTimezone=Asia/Shanghai
+#  thymeleaf:
   thymeleaf:
     mode: HTML5
   mvc:

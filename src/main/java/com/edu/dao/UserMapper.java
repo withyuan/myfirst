@@ -95,5 +95,9 @@ public interface UserMapper {
      * 根据userID查询用户
      */
        String findUserNameByUserId(Integer id);
+    /**
+     * 根据用户名查询该用户
+     */
+    User findUserByUserName(@Param("username") String username);
 
 }

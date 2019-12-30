@@ -104,7 +104,6 @@ public class ProductImpl implements IProductService {
         }
         //执行之前
         PageHelper.startPage(pageNum, pageSize);
-
         List<Product> products = productMapper.findProductsByNameAndId(productId, productName);
         List<ProductListVO> productListVOS = Lists.newArrayList();
         // List<Product>---> List<ProductListVO>

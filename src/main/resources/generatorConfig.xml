@@ -20,8 +20,8 @@
 
         <!-- JDBC 连接 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3308/shopping"
-                        userId="root" password="root"/>
+                        connectionURL="jdbc:mysql://121.36.13.233:3306/shopping"
+                        userId="root" password="@quwosulileiTMD521"/>
 
         <!-- 数据类型转换器 -->
         <javaTypeResolver type="org.mybatis.generator.internal.types.JavaTypeResolverDefaultImpl">
@@ -48,7 +48,7 @@
         </javaClientGenerator>
 
         <!-- 数据表 -->
-        <table tableName="neuedu_cart" domainObjectName="Cart" enableCountByExample="false"
+       <!-- <table tableName="neuedu_cart" domainObjectName="Cart" enableCountByExample="false"
         enableSelectByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"/>
         <table tableName="neuedu_collect" domainObjectName="Collect" enableCountByExample="false"
                enableSelectByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"/>
@@ -66,7 +66,8 @@
         <table tableName="neuedu_shipping" domainObjectName="Shipping" enableCountByExample="false"
                enableSelectByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"/>
         <table tableName="neuedu_user" domainObjectName="User" enableCountByExample="false"
-               enableSelectByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"/>
-
+               enableSelectByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"/>-->
+        <table tableName="neuedu_seller" domainObjectName="Seller" enableCountByExample="false"
+        enableSelectByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"/>
     </context>
 </generatorConfiguration>

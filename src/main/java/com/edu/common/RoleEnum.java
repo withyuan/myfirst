@@ -6,8 +6,8 @@ package com.edu.common;
 public enum RoleEnum {
 
     ROLE_User(1,"普通用户"),
-    ROLE_ADMIN(0,"管理员")
-
+    ROLE_ADMIN(0,"管理员"),
+    ROLE_SELLER(2,"商家")
     ;
     private  int role;
     private  String desc;
