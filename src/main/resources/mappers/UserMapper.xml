@@ -86,7 +86,7 @@
     <!--根据用户名密码查询-->
     <select id="findUserAndPwd"  parameterType="map"
             resultMap="BaseResultMap">
-    select id, username, email, phone, question, answer, role, create_time,
+    select id, username, email, phone, question, answer, role, create_time,password,
     update_time, ip from neuedu_user where username=#{username} and password=#{password}
 
 

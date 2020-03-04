@@ -12,6 +12,15 @@ public class Seller implements Serializable {
      * @mbg.generated
      */
     private String sellerId;
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     /**
      *

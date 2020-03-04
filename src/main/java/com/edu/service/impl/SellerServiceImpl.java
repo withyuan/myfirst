@@ -8,6 +8,7 @@ import com.edu.pojo.Seller;
 import com.edu.pojo.User;
 import com.edu.service.ISellerService;
 import com.edu.service.IUserService;
+import com.edu.untils.MD5Utils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+
 
 public class SellerServiceImpl implements ISellerService {
     @Autowired
@@ -46,6 +48,8 @@ public class SellerServiceImpl implements ISellerService {
 
         //去加入到数据库中
         seller.setStatus("0");
+        //加入之前把密码加密
+        seller.setPassword(MD5Utils.getMD5Code(seller.getPassword()));
         int result = sellerMapper.insert(seller);
         if(result<=0){
             //添加失败
@@ -53,6 +57,35 @@ public class SellerServiceImpl implements ISellerService {
 
         }
         return ServerResponse.createServerResponseBySuccess("申请成功，请您等待审核！！");
+
+    }
+
+    @Override
+    public ServerResponse loginAdd(Seller seller,User user) {
+        //第一步判断参数是否为空
+        if(seller==null){
+            //参数为空
+            return  ServerResponse.createServerResponseByError(ResponseCode.ERROR, "参数不能为空");
+        }
+        //不为空因为有账号 所以不用加入到 用户表中但是得判断该账号密码 是否正确
+
+        seller.setPassword(user.getPassword());
+        seller.setTelephone(user.getPhone());
+        seller.setQuestion(user.getQuestion());
+        seller.setAnswer(user.getAnswer());
+        seller.setEmail(user.getEmail());
+        seller.setSellerId(user.getUsername());
+        //去加入到数据库中
+        seller.setStatus("0");
+        int result = sellerMapper.insert(seller);
+        if(result<=0){
+            //添加失败
+            return  ServerResponse.createServerResponseByError(ResponseCode.ERROR, "申请失败");
+
+        }
+        return ServerResponse.createServerResponseBySuccess("申请成功，请您等待审核！！");
+
+
 
     }
 

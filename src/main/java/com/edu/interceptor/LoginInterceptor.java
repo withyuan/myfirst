@@ -25,6 +25,7 @@ import java.io.PrintWriter;
 public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+
         HttpSession session= request.getSession();
         User user=(User) session.getAttribute(Const.CURRENT_USER);
         if(user==null){

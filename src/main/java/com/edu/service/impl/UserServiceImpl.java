@@ -9,6 +9,7 @@ import com.edu.service.IUserService;
 import com.edu.untils.MD5Utils;
 import com.edu.untils.RedisApi;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpCookie;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -223,4 +224,7 @@ public class UserServiceImpl implements IUserService {
         user.setRole(role);
         return userMapper.updateByPrimaryKey(user);
     }
+
+
+
 }

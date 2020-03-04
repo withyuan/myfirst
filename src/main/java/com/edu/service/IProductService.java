@@ -54,4 +54,8 @@ public interface IProductService {
      * 查询热销产品
      */
     ServerResponse hotList(Integer pageNum,Integer pageSize);
+    /**
+     * 查看历史记录
+     */
+    ServerResponse history(String[] strings,Integer pageNum, Integer pageSize);
 }

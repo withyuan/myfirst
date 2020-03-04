@@ -303,6 +303,36 @@ public class ProductImpl implements IProductService {
 
     }
 
+    @Override
+    public ServerResponse history(String[] strings, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<ProductListVO> productListVOS = Lists.newArrayList();
+        List<Product> products=Lists.newArrayList();
+        int count=strings.length;//数量
+        if (strings.length!=0){
+            for (String id:strings
+                 ) {
+                //一个一个遍历出来
+                Integer productId=Integer.parseInt(id);
+                Product product= productMapper.selectByPrimaryKey(productId);
+                products.add(product);
+            }
+
+        }
+
+        // List<Product>---> List<ProductListVO>
+        if (products != null && products.size() > 0) {
+            for (Product product : products
+            ) {
+                ProductListVO productListVO = assembleProductListVO(product);
+                productListVOS.add(productListVO);
+            }
+        }
+        PageInfo pageInfo = new PageInfo(productListVOS);
+
+        return ServerResponse.createServerResponseBySuccess(pageInfo,count);
+    }
+
 
     private ProductListVO assembleProductListVO(Product product) {
         ProductListVO productListVO = new ProductListVO();

@@ -109,12 +109,14 @@ public class UserController {
         return ServerResponse.createServerResponseBySuccess("退出成功");
 
     }
+
     /**
      * .登录中状态重置密码
      * /user/reset_password.do
      */
     @RequestMapping(value = "reset_password.do")
-    public ServerResponse reset_password(String passwordOld,String passwordNew,HttpSession session){
+    public ServerResponse reset_password(
+            String passwordOld,String passwordNew,HttpSession session){
         User user = (User)session.getAttribute(Const.CURRENT_USER);
         if(user==null){
             return ServerResponse.createServerResponseByError(ResponseCode.NO_LOGIN, "用户没有登录或者session过期");
