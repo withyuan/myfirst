@@ -44,6 +44,6 @@ public interface IUserService {
     /**
      * 更新用户角色
      */
-    int updateUserStatus(String username,Integer role);
+    ServerResponse updateUserStatus(String username,Integer role);
 
 }

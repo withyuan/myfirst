@@ -24,6 +24,5 @@ public class WebSocketContorller {
 //        String text = userName + " 你好！ 这是websocket单人发送！";
         webSocket.sendOneMessage(userName, text);
         return text;
-
     }
 }

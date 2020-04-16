@@ -142,5 +142,9 @@
       </if>
     </where>
   </select>
+  <select id="show" resultType="String" resultMap="BaseResultMap">
+    select *
+    from neuedu_seller where seller_id=#{sellerId}
+  </select>
 
 </mapper>

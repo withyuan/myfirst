@@ -54,4 +54,6 @@ public interface SellerMapper {
      */
     List<Seller> findSellerByName(@Param("name") String name,
                                   @Param("nickName") String nickName);
+    //查看个人信息
+    Seller show(@Param("sellerId")String sellerId);
 }

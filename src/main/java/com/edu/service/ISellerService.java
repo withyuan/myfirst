@@ -19,4 +19,8 @@ public interface ISellerService {
     //根据名字查询商家
    ServerResponse searchByName(String name,String nickName,Integer pageNum,Integer pageSize);
  ServerResponse updateStatus(String sellerId,String status);
+    //查看商家个人信息
+    ServerResponse show(String sellerId);
+    //登录状态下查看入驻状态
+    ServerResponse  showLogin(String username);
 }

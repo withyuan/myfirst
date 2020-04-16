@@ -25,10 +25,12 @@ public class ShippingController {
     @RequestMapping("add.do")
     public ServerResponse add(Shipping shipping, HttpSession session){
         User user = (User) session.getAttribute(Const.CURRENT_USER);
-
         Integer userId = user.getId();
         shipping.setUserId(userId);
         return shippingService.add(shipping);
+
+
+
     }
     /**
      * 更新地址

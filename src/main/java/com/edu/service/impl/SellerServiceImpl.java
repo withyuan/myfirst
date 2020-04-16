@@ -68,22 +68,41 @@ public class SellerServiceImpl implements ISellerService {
             return  ServerResponse.createServerResponseByError(ResponseCode.ERROR, "参数不能为空");
         }
         //不为空因为有账号 所以不用加入到 用户表中但是得判断该账号密码 是否正确
+        //判断该账号是否已经申请 根据sellerID查看
+        Seller oldSeller= sellerMapper.show(user.getUsername());
+        if(oldSeller!=null){
+            //说明已经申请过了 吧信息返回
+            if(oldSeller.getStatus().equals("1")){
+                //审核通过
+                return ServerResponse.createServerResponseBySuccess(oldSeller,"恭喜您审核通过...");
+            }else if(oldSeller.getStatus().equals("3")) {
+                return  ServerResponse.createServerResponseBySuccess(oldSeller,"抱歉审核失败...");
+            }else {
+                return  ServerResponse.createServerResponseBySuccess(oldSeller,"正在审核中...");
 
-        seller.setPassword(user.getPassword());
-        seller.setTelephone(user.getPhone());
-        seller.setQuestion(user.getQuestion());
-        seller.setAnswer(user.getAnswer());
-        seller.setEmail(user.getEmail());
-        seller.setSellerId(user.getUsername());
-        //去加入到数据库中
-        seller.setStatus("0");
-        int result = sellerMapper.insert(seller);
-        if(result<=0){
-            //添加失败
-            return  ServerResponse.createServerResponseByError(ResponseCode.ERROR, "申请失败");
+            }
+
+
+        }else {
+
+            seller.setPassword(user.getPassword());
+            seller.setTelephone(user.getPhone());
+            seller.setQuestion(user.getQuestion());
+            seller.setAnswer(user.getAnswer());
+            seller.setEmail(user.getEmail());
+            seller.setSellerId(user.getUsername());
+            //去加入到数据库中
+            seller.setStatus("0");
+            int result = sellerMapper.insert(seller);
+            if(result<=0){
+                //添加失败
+                return  ServerResponse.createServerResponseByError(ResponseCode.ERROR, "申请失败");
+
+            }
+            return ServerResponse.createServerResponseBySuccess("申请成功，请您等待审核！！");
+
 
         }
-        return ServerResponse.createServerResponseBySuccess("申请成功，请您等待审核！！");
 
 
 
@@ -150,6 +169,36 @@ public class SellerServiceImpl implements ISellerService {
     }
     return ServerResponse.createServerResponseBySuccess("修改状态成功！");
 
+
+
+
+    }
+
+    @Override
+    public ServerResponse show(String sellerId) {
+        //验证不为空
+        if(sellerId.equals("")||sellerId==null){
+            return ServerResponse.createServerResponseByError(ResponseCode.ERROR, "参数不能为空");
+        }
+        //拿到sellerId去查看
+        Seller seller= sellerMapper.show(sellerId);
+
+        return ServerResponse.createServerResponseBySuccess(seller);
+    }
+
+    @Override
+    public ServerResponse showLogin(String username) {
+        Seller seller= sellerMapper.show(username);
+        if(seller!=null){
+            //这个用户已经申请了商家入驻
+            String status=seller.getStatus();
+            return  ServerResponse.createServerResponseBySuccess(status);
+
+        }else {
+            //查不到这个用户
+            return  ServerResponse.createServerResponseByError(ResponseCode.ERROR, "你还没有申请过呢");
+
+        }
 
 
 

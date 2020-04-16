@@ -126,7 +126,6 @@ public class FrontProductController {
             if (cookies[i].getName().equals("producthistoryid")) {
                 System.out.println(cookies[i].getValue());
                 pids = cookies[i].getValue().split("#");
-
                 //得到cookie中存在的id，展现浏览过的商品
             }
 

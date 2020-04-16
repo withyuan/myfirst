@@ -6,6 +6,7 @@ import com.edu.service.IUserService;
 import com.edu.untils.Const;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
@@ -27,7 +28,14 @@ public class UserManagerController {
         }
         return  serverResponse;
     }
+    /**
+     * 更新用户角色
 
+     */
+    @RequestMapping(value = "update_user_status")
+    public  ServerResponse updateUserStatus(@RequestParam("username") String username, @RequestParam("role")Integer role){
+        return userService.updateUserStatus(username, role);
+    };
 
 
 

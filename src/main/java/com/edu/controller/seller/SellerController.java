@@ -44,5 +44,25 @@ public class SellerController {
 
         return  sellerService.loginAdd(seller,user);
     }
+    /**
+     * 查看商家个人信息。
+     */
+    @RequestMapping(value = "show")
+    public ServerResponse show(String sellerId){
+
+        return sellerService.show(sellerId);
+
+    }
+    //登录状态下查看状态
+    @RequestMapping(value = "show_login")
+    public  ServerResponse showLogin(HttpSession session){
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if(user==null){
+            return ServerResponse.createServerResponseByError(ResponseCode.NO_LOGIN, "用户未登录，无法获取当前用户信息,status=10强制退出");
+        }
+        String username=user.getUsername();
+        return  sellerService.showLogin(username);
+
+    }
 
 }

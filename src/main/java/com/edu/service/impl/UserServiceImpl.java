@@ -9,7 +9,6 @@ import com.edu.service.IUserService;
 import com.edu.untils.MD5Utils;
 import com.edu.untils.RedisApi;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpCookie;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -217,12 +216,19 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public int updateUserStatus(String username, Integer role) {
+    public ServerResponse updateUserStatus(String username, Integer role) {
         //根据用户名去查询该用户
         User user = userMapper.findUserByUserName(username);
         //找见该用户去修改他的状态
         user.setRole(role);
-        return userMapper.updateByPrimaryKey(user);
+        int result=userMapper.updateByPrimaryKey(user);
+        if(result>0){
+            //修改成功
+            return  ServerResponse.createServerResponseBySuccess("修改成功");
+        }else{
+            return ServerResponse.createServerResponseByError(ResponseCode.ERROR, "修改失败");
+
+        }
     }
 
 
