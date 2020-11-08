@@ -11,6 +11,7 @@ public class LoginConfig implements WebMvcConfigurer {
     @Autowired
     LoginInterceptor loginInterceptor;
     @Autowired
+
     UserInterceptor userInterceptor;
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -21,7 +22,7 @@ public class LoginConfig implements WebMvcConfigurer {
         registry.addInterceptor(userInterceptor)
                 .addPathPatterns("/cart/**","/order/**","/shipping/**","/user/**","/collect/**")
                 .excludePathPatterns("/user/register.do","/user/login/**","/user/history","/user/forget_get_question/**"
-                ,"/user/forget_check_answer.do","/user/forget_reset_password.do",
+                ,"/user/forget_check_answer.do","/user/forget_reset_password.do","/user/sendMessage","/user/check/vsCode",
                         "/user/logout.do","/order/callback.do");
     }
 

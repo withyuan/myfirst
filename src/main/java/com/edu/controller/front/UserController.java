@@ -1,16 +1,15 @@
 package com.edu.controller.front;
 
+import com.aliyuncs.exceptions.ClientException;
 import com.edu.common.ResponseCode;
 import com.edu.common.RoleEnum;
 import com.edu.common.ServerResponse;
 import com.edu.pojo.User;
 import com.edu.service.IUserService;
+import com.edu.untils.AliyunSmsUtils;
 import com.edu.untils.Const;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -20,6 +19,30 @@ import javax.servlet.http.HttpSession;
 public class UserController {
     @Autowired
     IUserService userService;
+    /**
+     * 短信验证接口
+     */
+    @RequestMapping("/sendMessage")
+    @ResponseBody
+    public String sendMessage(String telephone,HttpSession session) throws ClientException, InterruptedException {
+        String code = AliyunSmsUtils.sendMessage(telephone);
+        System.out.println(code);
+        session.setAttribute("code",code);
+        return code;
+    }
+    /**
+     *  验证手机验证码是否正确
+     * @param code
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "check/vsCode", method = RequestMethod.POST)
+    public ServerResponse vsCode(@RequestParam("captcha") String code,HttpSession session) {
+        if(code.equals(session.getAttribute("code"))){
+            return ServerResponse.createServerResponseBySuccess();
+        }
+        return ServerResponse.createServerResponseByError(ResponseCode.ERROR, "验证码输入错误");
+    }
     /**
      * 注册接口
      */

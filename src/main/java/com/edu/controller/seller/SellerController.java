@@ -29,6 +29,7 @@ public class SellerController {
      */
     @RequestMapping(value= "add")
     public ServerResponse add(Seller seller){
+
         return  sellerService.add(seller);
     }
     /**
