@@ -20,8 +20,8 @@ public class AliyunSmsUtils {
     static final String product = "Dysmsapi";
     //产品域名,开发者无需替换
     static final String domain = "dysmsapi.aliyuncs.com";
-    /* 用户登录名称 lmj@1460508932314229.onaliyun.com
-     登录密码 oG2?vkR#y2#8U8UwtAcUmcH}YJOmMErk
+    /* 用户登录名称
+     登录密码 
          AccessKey ID
          AccessKeySecret*/
     // TODO 此处需要替换成开发者自己的AK(在阿里云访问控制台寻找)
